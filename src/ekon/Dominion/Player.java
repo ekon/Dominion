@@ -193,6 +193,15 @@ public class Player implements Comparable<Player> {
 	this.discard = discard;
 	this.deck = deck;
   }
+  
+  // TODO(ekon): Look at where else this needs to be called.
+  private void replenishDeckFromDiscard() {
+	Collections.shuffle(discard.asList());	
+	for (Card card : discard.asList()) {
+	  deck.push(card);
+	}
+	discard = new Cards();
+  }
 
   public enum CardPlace {
 	HAND,
@@ -262,15 +271,20 @@ public class Player implements Comparable<Player> {
 	}
 	
 	public Card move() {
-	  Card card;
-	  switch(from) {
-		case DECK:	card = deck.pop(); break;
-		default: throw new UnsupportedOperationException("Did you mean to use move(Card) instead?");
-	  }
 	  if (to != NO_MOVE) {
 		throw new UnsupportedOperationException("Did you mean to use move(Card) instead?");
 	  }
-	  return card;
+	  
+	  switch(from) {
+		case DECK:
+		  if (deck.size() > 0) {
+			return deck.pop();
+		  } else {
+			replenishDeckFromDiscard();
+			return deck.pop();
+		  }
+		default: throw new UnsupportedOperationException("Did you mean to use move(Card) instead?");
+	  }
 	}
 	
 	public Cards move(int numCards) {

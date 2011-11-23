@@ -104,7 +104,7 @@ public class CardUtil {
 			Card cardToPutOnDeck = null;
 			uiUtil.tellUser(opponent.name() + "'s been attacked with BEAUROCRAT.");
 			// If not playing reaction, then getting attacked.
-			if(!uiUtil.playReaction(opponent)) {
+			if(!uiUtil.revealReaction(opponent)) {
 				Cards victoryCards = opponent.hand().getCards(VICTORY);
 				if (victoryCards.size() == 0) {
 					cardToPutOnDeck = null;
@@ -131,7 +131,7 @@ public class CardUtil {
 			Cards cardsToDiscard = null;
 			
 			// If not playing reaction, then getting attacked.
-			if(!uiUtil.playReaction(opponent)) {
+			if(!uiUtil.revealReaction(opponent)) {
 				Cards availableCards = opponent.hand().cards();
 				int numCardsToDiscard = availableCards.size() - 3;
 				cardsToDiscard = uiUtil.getCardsFromUser(
@@ -161,7 +161,22 @@ public class CardUtil {
 	}
 	
 	private static void playSpy(Player player) {
-		
+	  // Each player (including you) reveals the top card of his deck and either discards it or puts it back, your choice.
+	  
+	  Card revealedCard = player.mover().from(DECK).move();
+	  boolean toDiscard = uiUtil.getBooleanFromUser(player.name() + ": You revealed " + revealedCard + ". Would you like to discard (YES) or put the card back on your deck (NO)?");
+	  if (toDiscard) { player.mover().to(DISCARD).move(revealedCard); }
+	  else { player.mover().to(DECK).move(revealedCard); }
+	  
+	  for (Player opponent : player.opponents()) {
+		uiUtil.tellUser(opponent.name() + " has been attacked with " + Card.SPY);
+		if (!uiUtil.revealReaction(opponent)) {		
+		  revealedCard = opponent.mover().from(DECK).move();
+		  toDiscard = uiUtil.getBooleanFromUser(opponent.name() + ": revealed " + revealedCard + ". Would you like to discard (YES) or put the card back on your deck (NO)?");
+		  if (toDiscard) { opponent.mover().to(DISCARD).move(revealedCard); }
+		  else { opponent.mover().to(DECK).move(revealedCard); }
+		}
+	  }
 	}
 	
 	private static void playThief(Player player, Board board) {

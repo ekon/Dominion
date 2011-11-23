@@ -48,7 +48,7 @@ public class TestPlayer extends Player {
 	
 	// TODO(ekon): Don't care about order. May want to though.
 	Assert.assertEquals(expectedHand, hand().availableCards());
-	Assert.assertEquals(deckStack, deck());
+	Assert.assertTrue(deckStack.containsAll(deck())); // Don't care about order.
 	Assert.assertEquals(expectedDiscard, discard());
   }
   

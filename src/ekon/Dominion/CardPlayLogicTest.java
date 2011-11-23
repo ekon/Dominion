@@ -467,6 +467,86 @@ public class CardPlayLogicTest extends TestCase {
 		verify();
 	}
 	
+	@Test
+	public void testSpy() {
+	  // Each player (including you) reveals the top card of his deck and either discards it or puts it back, your choice.
+	  trash = new Trash(COLONY);
+	  expectedTrash = trash;
+	  opponents = new TestPlayer[3];
+	  StringBuilder userInput = new StringBuilder();
+	  
+	  // Player discards card.
+	  player = new PlayerBuilder()
+		.setHand(	new Cards( SPY, ESTATE ),
+					new Cards(ESTATE))
+	    .setDeck(	new Cards( ESTATE ),
+					new Cards())
+	    .setDiscard(new Cards( COPPER ),
+	    			new Cards( COPPER, ESTATE ))
+	    .build("P1");
+	  userInput.append("YES\n");
+	  
+	  // Opponent reveals reaction. Nothing happens.
+	  opponents[0] = new PlayerBuilder()
+		.setHand(	new Cards( MILITIA, MOAT),
+					new Cards (MILITIA, MOAT))
+		.setDeck(	new Cards( ESTATE ),
+		   			new Cards( ESTATE ))
+	    .setDiscard(new Cards( COPPER, ESTATE ),
+	    			new Cards( COPPER, ESTATE ))
+	    .build("P2");
+	  userInput.append("YES\n");
+	  
+	  // Opponent decides to not reveal reaction. Player chooses to put card back on deck.
+	  opponents[1] = new PlayerBuilder()
+		.setHand(	new Cards( MILITIA, MOAT ),
+					new Cards (MILITIA, MOAT))
+		.setDeck(	new Cards( ESTATE ),
+		    		new Cards( ESTATE ))
+	    .setDiscard(new Cards( COPPER ),
+	    			new Cards( COPPER ))
+	    .build("P3");
+	  userInput.append("NO\nNO\n");
+	  
+	  // Opponent does not have reaction to reveal. Player chooses to put card in discard.
+	  opponents[2] = new PlayerBuilder()
+		.setHand(	new Cards( MILITIA, COPPER ),
+					new Cards (MILITIA, COPPER ))
+		.setDeck(	new Cards( ESTATE, GOLD ),
+		   			new Cards( ESTATE ))
+	    .setDiscard(new Cards( COPPER ),
+	    			new Cards( COPPER, GOLD ))
+	    .build("P4");
+	  userInput.append("YES\n");
+
+	  run(userInput.toString(), SPY);
+	  
+	  // Verify player putting card back on deck.
+	  player = new PlayerBuilder()
+		.setHand(	new Cards( SPY, ESTATE ),
+					new Cards (ESTATE))
+		.setDeck(	new Cards( ESTATE ),
+		    		new Cards( ESTATE ))
+	    .setDiscard(new Cards( COPPER ),
+	    			new Cards( COPPER ))
+	    .build("P1");
+	  userInput = new StringBuilder("NO\n");
+	  
+	  // Verify that opponent with no more cards left on deck, has the cards from his discard reshuffled. Player chooses to keep card on deck.
+	  opponents = new TestPlayer[1];
+	  opponents[0] = new PlayerBuilder()
+		.setHand(	new Cards( ESTATE ),
+					new Cards (ESTATE))
+		.setDeck(	new Cards(),
+		    		new Cards( CURSE, COPPER ))
+	    .setDiscard(new Cards( CURSE, COPPER ),
+	    			new Cards( ))
+	    .build("P2");
+	  userInput.append("NO\n");
+	  
+	  run(userInput.toString(), SPY);
+	}
+	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {
 		return new PlayerBuilder()
 			.setHand( 	new Cards( REMODEL, COPPER ),

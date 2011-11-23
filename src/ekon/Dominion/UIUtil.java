@@ -34,7 +34,7 @@ public class UIUtil {
 	System.out.println(message);
   }
   
-  public boolean playReaction(Player opponent) {
+  public boolean revealReaction(Player opponent) {
 	Cards reactionCards = opponent.hand().getCards(CardType.REACTION);
 	boolean playReaction = false;
 	if (reactionCards.size() > 0) {
