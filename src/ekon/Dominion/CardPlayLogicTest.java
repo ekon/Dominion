@@ -131,8 +131,8 @@ public class CardPlayLogicTest extends TestCase {
 		expectedTrash = new Trash( CHANCELLOR, COPPER, SILVER);
 		
 		player = new PlayerBuilder()
-			.setHand(	new Cards( CHAPEL, COPPER, ESTATE, COPPER, SILVER),
-						new Cards( ESTATE, COPPER))
+			.setHand(new Cards( CHAPEL, COPPER, ESTATE, COPPER, SILVER),
+					 new Cards( ESTATE, COPPER))
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
@@ -143,8 +143,8 @@ public class CardPlayLogicTest extends TestCase {
 		expectedTrash = new Trash( COPPER, ESTATE);
 		
 		player = new PlayerBuilder()
-			.setHand(	new Cards( CHAPEL, COPPER, ESTATE),
-					 	new Cards())
+			.setHand(new Cards( CHAPEL, COPPER, ESTATE),
+					 new Cards())
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
@@ -155,8 +155,8 @@ public class CardPlayLogicTest extends TestCase {
 		expectedTrash = new Trash( ESTATE);
 		
 		player = new PlayerBuilder()
-			.setHand(	new Cards( CHAPEL, COPPER, ESTATE, COPPER),
-						new Cards( COPPER, COPPER))
+			.setHand(new Cards( CHAPEL, COPPER, ESTATE, COPPER),
+					 new Cards( COPPER, COPPER))
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
@@ -167,8 +167,8 @@ public class CardPlayLogicTest extends TestCase {
 		expectedTrash = new Trash( COPPER, ESTATE);
 		
 		player = new PlayerBuilder()
-			.setHand(	new Cards( CHAPEL, COPPER, ESTATE, COPPER),
-						new Cards( COPPER))
+			.setHand(new Cards( CHAPEL, COPPER, ESTATE, COPPER),
+					 new Cards( COPPER))
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
@@ -185,7 +185,7 @@ public class CardPlayLogicTest extends TestCase {
 		// YES		
 		player = new PlayerBuilder()
 			.setHand(	new Cards( CHANCELLOR, COPPER, ESTATE, COPPER ),
-						new Cards())
+					 	new Cards())
 		    .setDiscard(new Cards(),
 		    			new Cards( COPPER, ESTATE, COPPER ))
 		    .setDeck(deck, deck)
@@ -195,7 +195,7 @@ public class CardPlayLogicTest extends TestCase {
 		// NO
 		player = new PlayerBuilder()
 			.setHand(	new Cards( CHANCELLOR, COPPER, ESTATE, COPPER ),
-					new Cards( COPPER, ESTATE, COPPER ))
+					 	new Cards( COPPER, ESTATE, COPPER ))
 		    .setDiscard(new Cards( PROVINCE ),
 		    			new Cards( PROVINCE ))
 		    .setDeck(deck, deck)
@@ -205,9 +205,9 @@ public class CardPlayLogicTest extends TestCase {
 		// Invalid input, then YES.		
 		player = new PlayerBuilder()
 			.setHand(	new Cards( CHANCELLOR, COPPER, ESTATE, COPPER ),
-					new Cards())
+						new Cards())
 		    .setDiscard(new Cards( MILITIA ),
-		    		new Cards( MILITIA, COPPER, ESTATE, COPPER ))
+		    			new Cards( MILITIA, COPPER, ESTATE, COPPER ))
 		    .setDeck(deck, deck)
 		    .build("P1");
 		runSimple("INVALID\nYES", CHANCELLOR);
