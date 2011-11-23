@@ -187,6 +187,7 @@ public class CardUtil {
 		uiUtil.tellUser(opponent.name() + " has been attacked with " + Card.THIEF);
 		if (!uiUtil.revealReaction(opponent)) {
 		  Cards revealedCards = opponent.mover().from(DECK).move(2);
+		  Cards cardsToDiscard = new Cards(revealedCards);
 		  
 		  // TODO(ekon): Does this include treasure-action cards?
 		  if (revealedCards.contains(TREASURE)) {
@@ -197,10 +198,14 @@ public class CardUtil {
 			} else {
 			  card = availableCards.get(0);
 			}
+			cardsToDiscard.remove(card);
 			boolean toTrash = uiUtil.getBooleanFromUser("What do you want to do with the card?", "TRASH", "TAKE");
 			if (toTrash) { opponent.mover().to(TRASH).move(card); }
 			else { player.mover().to(DISCARD).move(card); }			
 		  }
+		  
+		  // Discard leftover cards;
+		  opponent.mover().to(DISCARD).move(cardsToDiscard);
 		}
 	  }
 	}
