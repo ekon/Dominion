@@ -4,6 +4,7 @@ import static ekon.dominion.Card.*;
 
 import java.io.StringReader;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.junit.Test;
@@ -18,6 +19,7 @@ public class CardPlayLogicTest extends TestCase {
 	private Board board;
 	private TestPlayer player;
 	private TestPlayer[] opponents;
+	private Card cardToPlay;
 	
 	private Cards actionCards = new Cards();
 
@@ -28,6 +30,7 @@ public class CardPlayLogicTest extends TestCase {
 		// This never changes for a CELLAR, so initializing for all tests.
 		trash = new Trash(CHANCELLOR);
 		expectedTrash = trash;
+		cardToPlay = CELLAR;
 
 		// Verify discarding one card.
 		player = new PlayerBuilder()
@@ -38,7 +41,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(new Cards(),
 						new Cards( COPPER ))
 			.build("P1");
-		runSimple("COPPER", CELLAR);
+		runSimple("COPPER");
 		
 		// Verify that one card is removed & if there is no deck/discard, it is picked back up.	
 		player = new PlayerBuilder()
@@ -49,7 +52,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(),
 		    			new Cards())
 		    .build("P1");
-		runSimple("COPPER", CELLAR);
+		runSimple("COPPER");
 		
 		// Verify that multiple cards are removed and replaced.		
 		player = new PlayerBuilder()
@@ -60,7 +63,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(),
 		    			new Cards( COPPER, ESTATE ))
 		    .build("P1");
-		runSimple("COPPER,ESTATE", CELLAR);
+		runSimple("COPPER,ESTATE");
 		
 		// Verify that entire deck is removed and replaced.	
 		player = new PlayerBuilder()
@@ -71,7 +74,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards( PROVINCE ),
 		    			new Cards( PROVINCE, COPPER, ESTATE, COPPER))
 		    .build("P1");
-		runSimple("COPPER,ESTATE,COPPER", CELLAR);
+		runSimple("COPPER,ESTATE,COPPER");
 		
 		// Verify DONE.
 		player = new PlayerBuilder()
@@ -82,7 +85,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards( PROVINCE ),
 		    			new Cards( PROVINCE ))
 		    .build("P1");
-		runSimple("DONE", CELLAR);
+		runSimple("DONE");
 		
 		// Verify invalid cards, but then eventually valid cards.
 		player = new PlayerBuilder()
@@ -93,7 +96,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards( PROVINCE ),
 		    			new Cards( PROVINCE, COPPER, COPPER ))
 		    .build("P1");
-		runSimple("ESTATE,FEAST\nCOPPER,COPPER", CELLAR);
+		runSimple("ESTATE,FEAST\nCOPPER,COPPER");
 	}
 	
 	@Test
@@ -101,6 +104,7 @@ public class CardPlayLogicTest extends TestCase {
 		// These never change with a CHAPEL - so initializing for all tests.
 		Cards deck = new Cards( MILITIA);
 		Cards discard = new Cards( PROVINCE);
+		cardToPlay = CHAPEL;
 		
 		// Verify DONE (not trashing anything).
 		trash = new Trash();
@@ -112,7 +116,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
-		runSimple("DONE", CHAPEL);
+		runSimple("DONE");
 		
 		// Verify trashing 1 card.
 		trash = new Trash();
@@ -124,7 +128,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
-		runSimple("COPPER", CHAPEL);
+		runSimple("COPPER");
 		
 		// Verify trashing multiple cards.
 		trash = new Trash( CHANCELLOR);
@@ -136,7 +140,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
-		runSimple("COPPER,SILVER", CHAPEL);
+		runSimple("COPPER,SILVER");
 		
 		// Verify trashing hand.
 		trash = new Trash();
@@ -148,7 +152,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
-		runSimple("COPPER,ESTATE", CHAPEL);
+		runSimple("COPPER,ESTATE");
 		
 		// Verify invalid cards.
 		trash = new Trash();
@@ -160,7 +164,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
-		runSimple("COPPER,SILVER\nESTATE", CHAPEL); // this will only trash the estate.
+		runSimple("COPPER,SILVER\nESTATE"); // this will only trash the estate.
 
 		// Verify invalid cards.
 		trash = new Trash();
@@ -172,7 +176,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(discard,discard)
 		    .setDeck(	deck, deck)
 		    .build("P1");
-		runSimple("COPPER,SILVER\nCOPPER,ESTATE", CHAPEL); // this will only trash both copper and estate
+		runSimple("COPPER,SILVER\nCOPPER,ESTATE"); // this will only trash both copper and estate
 	}
 	
 	@Test
@@ -181,6 +185,7 @@ public class CardPlayLogicTest extends TestCase {
 		Cards deck = new Cards( PROVINCE, DUCHY );
 		trash = new Trash( COLONY );
 		expectedTrash = trash;
+		cardToPlay = CHANCELLOR;
 		
 		// YES		
 		player = new PlayerBuilder()
@@ -190,7 +195,7 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( COPPER, ESTATE, COPPER ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("YES", CHANCELLOR);
+		runSimple("YES");
 		
 		// NO
 		player = new PlayerBuilder()
@@ -200,7 +205,7 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( PROVINCE ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("NO", CHANCELLOR);
+		runSimple("NO");
 		
 		// Invalid input, then YES.		
 		player = new PlayerBuilder()
@@ -210,7 +215,7 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( MILITIA, COPPER, ESTATE, COPPER ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("INVALID\nYES", CHANCELLOR);
+		runSimple("INVALID\nYES");
 	}
 	
 	@Test
@@ -221,6 +226,7 @@ public class CardPlayLogicTest extends TestCase {
 		trash = new Trash( COLONY );
 		Cards expectedHand = new Cards( COPPER, ESTATE );
 		expectedTrash = trash;
+		cardToPlay = WORKSHOP;
 		
 		// Set-up board. All we need is the card being bought.
 		actionCards = new Cards( BEAUROCRAT, FEAST, FESTIVAL );
@@ -232,7 +238,7 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( MILITIA, BEAUROCRAT ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("BEAUROCRAT", WORKSHOP);		
+		runSimple("BEAUROCRAT");		
 		
 		// Buy an unavailable (card not on the board) card & then an available one.
 		player = new PlayerBuilder()
@@ -241,7 +247,7 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( MILITIA, BEAUROCRAT ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("MILITIA\nBEAUROCRAT", WORKSHOP);
+		runSimple("MILITIA\nBEAUROCRAT");
 		
 		// Buy an unavailable (depleted card stack) card & then an available one.
 		player = new PlayerBuilder()
@@ -266,7 +272,7 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( MILITIA, BEAUROCRAT ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("FESTIVAL\nBEAUROCRAT", WORKSHOP);
+		runSimple("FESTIVAL\nBEAUROCRAT");
 	}
 	
 	@Test
@@ -277,6 +283,7 @@ public class CardPlayLogicTest extends TestCase {
 		trash = new Trash( COPPER );
 		expectedTrash = trash;
 		Cards discard = new Cards( FESTIVAL );
+		cardToPlay = BEAUROCRAT;
 		
 		// Verify player gets a silver.
 		player = new PlayerBuilder()
@@ -345,7 +352,7 @@ public class CardPlayLogicTest extends TestCase {
 			.build("P7");
 		userInput.append("NO\n");
 
-		run(userInput.toString(), BEAUROCRAT);
+		run(userInput.toString());
 	}
 	
 	@Test
@@ -356,6 +363,7 @@ public class CardPlayLogicTest extends TestCase {
 		Cards deck = new Cards( PROVINCE, DUCHY );
 		trash = new Trash( COLONY );
 		expectedTrash = new Trash ( COLONY, FEAST );
+		cardToPlay = FEAST;
 		
 		// Set-up board. All we need is the card being bought.
 		actionCards = new Cards( FESTIVAL, COUNCIL_ROOM, GOLD );
@@ -367,7 +375,7 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( MILITIA, FESTIVAL ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("FESTIVAL", FEAST);		
+		runSimple("FESTIVAL");		
 		
 		// Buy an unavailable (card not on the board) card & then an available one.
 		player = new PlayerBuilder()
@@ -376,7 +384,7 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( MILITIA, FESTIVAL ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("MILITIA\nFESTIVAL", FEAST);
+		runSimple("MILITIA\nFESTIVAL");
 		
 		// Buy an unavailable (depleted card stack) card & then an available one.
 		player = new PlayerBuilder()
@@ -401,17 +409,18 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards( MILITIA, FESTIVAL ))
 		    .setDeck(deck, deck)
 		    .build("P1");
-		runSimple("GOLD\nFESTIVAL", FEAST);
+		runSimple("GOLD\nFESTIVAL");
 	}
 	
 	@Test
 	public void testMoneylander() {
 	  Cards discard = new Cards ( PROVINCE );
 	  Cards deck = new Cards ( COLONY );
+	  cardToPlay = MONEYLANDER;
 	  
 	  // Verify trashing copper gives player 3 extra coins.
 	  player = new PlayerBuilder()
-		.setHand(new Cards( MILITIA, COPPER, COPPER ),
+		.setHand(new Cards( MONEYLANDER, MILITIA, COPPER, COPPER ),
 				 new Cards( MILITIA, COPPER ))
 	    .setDiscard(discard, discard)
 	    .setDeck(deck, deck)
@@ -419,11 +428,11 @@ public class CardPlayLogicTest extends TestCase {
 
 	  trash = new Trash( COLONY );
 	  expectedTrash = new Trash( COLONY, COPPER );
-	  runSimple("MONEYLANDER", MONEYLANDER);
+	  runSimple("MONEYLANDER");
 	  
 	  // Verify a hand with no copper.
 	  player = new PlayerBuilder()
-		.setHand(new Cards( MILITIA ),
+		.setHand(new Cards( MONEYLANDER, MILITIA ),
 				 new Cards( MILITIA ))
 	    .setDiscard(discard, discard)
 	    .setDeck(deck, deck)
@@ -431,7 +440,7 @@ public class CardPlayLogicTest extends TestCase {
 
 	  trash = new Trash( COLONY );
 	  expectedTrash = trash;
-	  runSimple("MONEYLANDER", MONEYLANDER);	  
+	  runSimple("MONEYLANDER");	  
 	}
 	
 	@Test
@@ -439,21 +448,22 @@ public class CardPlayLogicTest extends TestCase {
 		Cards deck = new Cards( PROVINCE, DUCHY );
 		trash = new Trash( COLONY );
 		expectedTrash = new Trash( COLONY, COPPER );
+		cardToPlay = REMODEL;
 		
 		// Set-up board. All we need is the card being bought.
 		actionCards = new Cards( MOAT, CELLAR );
 		
 		// Verify remodeling a card works.
 		player = recreateRemodelPlayer(deck);
-		runSimple("COPPER\nMOAT", REMODEL);
+		runSimple("COPPER\nMOAT");
 		
 		// Try remodeling a card that's not in the hand, and then one that is.
 		player = recreateRemodelPlayer(deck);
-		runSimple("MILITIA\nCOPPER\nMOAT", REMODEL);
+		runSimple("MILITIA\nCOPPER\nMOAT");
 		
 		// Try remodeling to a card that's not on the board, and then one that is.
 		player = recreateRemodelPlayer(deck);
-		runSimple("COPPER\nCHAPEL\nMOAT", REMODEL);
+		runSimple("COPPER\nCHAPEL\nMOAT");
 		
 		// Try remodeling to a card that's depleted, and then a valid ones.
 		player = recreateRemodelPlayer(deck);
@@ -474,6 +484,7 @@ public class CardPlayLogicTest extends TestCase {
 	  expectedTrash = trash;
 	  opponents = new TestPlayer[3];
 	  StringBuilder userInput = new StringBuilder();
+	  cardToPlay = SPY;
 	  
 	  // Player discards card.
 	  player = new PlayerBuilder()
@@ -519,7 +530,7 @@ public class CardPlayLogicTest extends TestCase {
 	    .build("P4");
 	  userInput.append("YES\n");
 
-	  run(userInput.toString(), SPY);
+	  run(userInput.toString());
 	  
 	  // Verify player putting card back on deck.
 	  player = new PlayerBuilder()
@@ -544,7 +555,85 @@ public class CardPlayLogicTest extends TestCase {
 	    .build("P2");
 	  userInput.append("NO\n");
 	  
-	  run(userInput.toString(), SPY);
+	  run(userInput.toString());
+	}
+	
+	@Test
+	public void testThief() {
+	  // Each other player reveals the top 2 cards of his deck. If they revealed any Treasure cards, they trash one of them that you choose.
+	  // You may gain any or all of these trashed cards. They discard the other revealed cards.
+
+	  Cards deck = new Cards( COPPERSMITH );
+	  opponents = new TestPlayer[4];
+	  StringBuilder userInput = new StringBuilder();
+	  cardToPlay = THIEF;
+	  
+	  // Opponent doesn't have Treasure cards & has to pick up from Discard.
+	  opponents[0] = new PlayerBuilder()
+		.setHand(	new Cards( MOAT),
+					new Cards( MOAT))
+		.setDeck(	new Cards( MILITIA ),
+		   			new Cards( COPPER, MILITIA ))
+	    .setDiscard(new Cards( ESTATE, PROVINCE ),
+	    			new Cards())
+	    .build("P1");
+	  
+	  // Opponent reveals reaction. Nothing happens.
+	  opponents[0] = new PlayerBuilder()
+		.setHand(	new Cards( MOAT),
+					new Cards( MOAT))
+		.setDeck(	new Cards( COPPER, MILITIA ),
+		   			new Cards( COPPER, MILITIA ))
+	    .setDiscard(new Cards( DUCHY ),
+	    			new Cards( DUCHY ))
+	    .build("P2");
+	  userInput.append("YES\n");
+	  
+	  // Opponent decides to not reveal reaction. Player chooses to trash card.
+	  opponents[1] = new PlayerBuilder()
+		.setHand(	new Cards( MOAT ),
+					new Cards( MOAT))
+		.setDeck(	new Cards( COPPER, MILITIA ),
+		    		new Cards( ))
+	    .setDiscard(new Cards( DUCHY ),
+	    			new Cards( DUCHY, MILITIA ))
+	    .build("P3");
+	  userInput.append("NO\nTRASH\n");
+	  
+	  // Opponent does not have reaction to reveal. Player chooses to take his treasure.
+	  opponents[2] = new PlayerBuilder()
+		.setHand(	new Cards( FEAST ),
+					new Cards( FEAST ))
+		.setDeck(	new Cards( GOLD, MILITIA ),
+		   			new Cards( MILITIA ))
+	    .setDiscard(new Cards( DUCHY ),
+	    			new Cards( DUCHY, MILITIA ))
+	    .build("P4");
+	  userInput.append("TAKE\n");
+	  
+	  // Opponent has 2 treasures. Player choose to take one of them.
+	  opponents[3] = new PlayerBuilder()
+		.setHand(	new Cards( FEAST ),
+					new Cards( FEAST ))
+		.setDeck(	new Cards( SILVER, COPPER ),
+		   			new Cards( MILITIA ))
+	    .setDiscard(new Cards( DUCHY ),
+	    			new Cards( DUCHY, COPPER ))
+	    .build("P5");
+	  userInput.append("SILVER\nTAKE\n");
+	  
+	  // Player gains opponent's Treasure.
+	  player = new PlayerBuilder()
+		.setHand(	new Cards( THIEF, ESTATE ),
+					new Cards( ESTATE ))
+	    .setDeck(deck, deck)
+	    .setDiscard(new Cards( ESTATE ),
+	    			new Cards( ESTATE, GOLD, SILVER ))
+	    .build("P6");
+
+	  trash = new Trash(COLONY);
+	  expectedTrash = new Trash(COLONY, COPPER);
+	  run(userInput.toString());
 	}
 	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {
@@ -557,15 +646,15 @@ public class CardPlayLogicTest extends TestCase {
 		    .build("P1");
 	}
 	
-	private void runSimple(String userInput, Card cardToPlay) {
+	private void runSimple(String userInput) {
 		opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
-		run(userInput, cardToPlay);
+		run(userInput);
 	}
 	
-	private void run(String userInput, Card cardToPlay) {
-		setUp(userInput);
-		CardUtil.playCard(cardToPlay, player, board);
-		verify();
+	private void run(String userInput) {
+	  setUp(userInput);
+	  CardUtil.playCard(cardToPlay, player, board);
+	  verify();
 	}
 	
 	private void setUp(String userInput) {
@@ -576,6 +665,11 @@ public class CardPlayLogicTest extends TestCase {
 	
 	private void setUpPlayers() {
 		player.init(new Players(opponents), board);
+		
+		// Verify that player's hand contains the card we're trying to play.
+		if (!player.hand().contains(cardToPlay)) {
+		  Assert.fail("TEST ERROR: Player's hand doesn't contain card to play.");
+		} 
 		
 		for (TestPlayer opponent : opponents) {
 			Players itsOpponents = new Players();

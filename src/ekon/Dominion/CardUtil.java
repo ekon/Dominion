@@ -191,7 +191,12 @@ public class CardUtil {
 		  // TODO(ekon): Does this include treasure-action cards?
 		  if (revealedCards.contains(TREASURE)) {
 			Cards availableCards = revealedCards.getCards(TREASURE);
-			Card card = uiUtil.getCardFromUser(player.name() + "Which card do you wat to trash/take?", availableCards);
+			Card card;
+			if (availableCards.size() > 1) {
+			  card = uiUtil.getCardFromUser(player.name() + "Which card do you wat to trash/take?", availableCards);
+			} else {
+			  card = availableCards.get(0);
+			}
 			boolean toTrash = uiUtil.getBooleanFromUser("What do you want to do with the card?", "TRASH", "TAKE");
 			if (toTrash) { opponent.mover().to(TRASH).move(card); }
 			else { player.mover().to(DISCARD).move(card); }			
