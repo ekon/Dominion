@@ -422,6 +422,16 @@ public class CardPlayLogicTest extends TestCase {
 	  runSimple("MONEYLANDER", MONEYLANDER);
 	  
 	  // Verify a hand with no copper.
+	  player = new PlayerBuilder()
+		.setHand(new Cards( MILITIA ),
+				 new Cards( MILITIA ))
+	    .setDiscard(discard, discard)
+	    .setDeck(deck, deck)
+	    .build("P1");
+
+	  trash = new Trash( COLONY );
+	  expectedTrash = trash;
+	  runSimple("MONEYLANDER", MONEYLANDER);	  
 	}
 	
 	@Test
