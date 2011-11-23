@@ -170,7 +170,7 @@ public class CardUtil {
 	  
 	  for (Player opponent : player.opponents()) {
 		uiUtil.tellUser(opponent.name() + " has been attacked with " + Card.SPY);
-		if (!uiUtil.revealReaction(opponent)) {		
+		if (!uiUtil.revealReaction(opponent)) {
 		  revealedCard = opponent.mover().from(DECK).move();
 		  toDiscard = uiUtil.getBooleanFromUser(opponent.name() + ": revealed " + revealedCard + ". Would you like to discard (YES) or put the card back on your deck (NO)?");
 		  if (toDiscard) { opponent.mover().to(DISCARD).move(revealedCard); }
@@ -180,10 +180,28 @@ public class CardUtil {
 	}
 	
 	private static void playThief(Player player, Board board) {
-		
+	  // Each other player reveals the top 2 cards of his deck. If they revealed any Treasure cards, they trash one of them that you choose.
+	  // You may gain any or all of these trashed cards. They discard the other revealed cards.
+	  
+	  for (Player opponent : player.opponents()) {
+		uiUtil.tellUser(opponent.name() + " has been attacked with " + Card.THIEF);
+		if (!uiUtil.revealReaction(opponent)) {
+		  Cards revealedCards = opponent.mover().from(DECK).move(2);
+		  
+		  // TODO(ekon): Does this include treasure-action cards?
+		  if (revealedCards.contains(TREASURE)) {
+			Cards availableCards = revealedCards.getCards(TREASURE);
+			Card card = uiUtil.getCardFromUser(player.name() + "Which card do you wat to trash/take?", availableCards);
+			boolean toTrash = uiUtil.getBooleanFromUser("What do you want to do with the card?", "TRASH", "TAKE");
+			if (toTrash) { opponent.mover().to(TRASH).move(card); }
+			else { player.mover().to(DISCARD).move(card); }			
+		  }
+		}
+	  }
 	}
 	
 	private static void playThroneRoom(Player player) {
-		
+	  // Choose an action card in your hand. Play it twice.
+	  
 	}
 }

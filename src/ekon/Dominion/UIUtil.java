@@ -48,19 +48,23 @@ public class UIUtil {
 	return playReaction;
   }
   
-  // True=YES, False=NO.
-  public boolean getBooleanFromUser(String message) {
+  public boolean getBooleanFromUser(String message, String posOption, String negOption) {
 	while (true) {
-	  String availableOptions = "Available options are: YES/NO.";
+	  String availableOptions = "Available options are: " + posOption + "/" + negOption;
 	  String userInput = getUserInput(message, availableOptions);
 	  try {
-		if (userInput.equals("YES")) {
+		if (userInput.equals(posOption)) {
 		  return true;
-		} else if (userInput.equals("NO")) { return false; }
+		} else if (userInput.equals(negOption)) { return false; }
 	  } catch (IllegalArgumentException e) {
 		userInput = getUserInput(userInput + " is not an available option.", availableOptions);
 	  }
 	}
+  }
+  
+  // True=YES, False=NO.
+  public boolean getBooleanFromUser(String message) {
+	return getBooleanFromUser(message, "YES", "NO");
   }
   
   public Card getCardFromUser(String input, Cards availableCards) {
