@@ -29,6 +29,9 @@ public class CardPlayLogicTest extends TestCase {
 	private TurnProperties tp = new TurnProperties(), nextTp = new TurnProperties();
 	private TurnProperties expectedTp = new TurnProperties(), expectedNextTp = new TurnProperties();
 
+	private TurnProperties opponentTp = new TurnProperties(), opponentNextTp = new TurnProperties();
+	private TurnProperties opponentExpectedTp = new TurnProperties(), opponentExpectedNextTp = new TurnProperties();
+
 	@Test
 	public void testCellar() {
 		// This never changes for a CELLAR, so initializing for all tests.
@@ -317,49 +320,6 @@ public class CardPlayLogicTest extends TestCase {
 	}
 	
 	@Test
-	public void testFestival() {
-	  Cards deck = new Cards(COLONY);
-	  Cards discard = new Cards(MILITIA);
-	  trash = new Trash(ESTATE);
-	  expectedTrash = trash;
-	  expectedTp.addActions(2);
-	  expectedTp.addBuys(1);
-	  expectedTp.addCoins(2);
-	  cardToPlay = FESTIVAL;	 
-	  
-	  player = new PlayerBuilder()
-		.setHand(new Cards(FESTIVAL, COPPER),
-				 new Cards(COPPER))
-	    .setDiscard(discard,discard)
-	    .setDeck(deck, deck)
-	    .setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
-	    .build("P1");
-	  runSimple();
-	}
-	
-	@Test
-	public void testLaboratory() {
-	  Cards deck = new Cards(COLONY);
-	  Cards discard = new Cards(MILITIA);
-	  trash = new Trash(ESTATE);
-	  expectedTrash = trash;
-	  expectedTp.addCards(2);
-	  expectedTp.addActions(1);
-	  cardToPlay = LABORATORY;	 
-	  
-	  player = new PlayerBuilder()
-		.setHand(new Cards(LABORATORY, COPPER),
-				 new Cards(COPPER))
-	    .setDiscard(discard,discard)
-	    .setDeck(deck, deck)
-	    .setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
-	    .build("P1");
-	  runSimple();
-	}
-	
-	@Test
 	public void testWorkshop() {
 		// Gain a card costing up to 4.
 		Cards hand = new Cards(WORKSHOP, COPPER, ESTATE);
@@ -454,8 +414,8 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard, discard)
 			.setDeck(	new Cards(MILITIA),
 						new Cards(MILITIA))
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
+			.setTp(opponentTp, opponentExpectedTp)
+			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P2");
 		
 		// Victory, no reaction, puts victory on deck.
@@ -465,8 +425,8 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard, discard)
 			.setDeck(	new Cards(CURSE),
 						new Cards(CURSE, ESTATE))
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
+			.setTp(opponentTp, opponentExpectedTp)
+			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P3");
 		
 		// Multiple victories, no reaction, puts a chosen one on deck. First input invalid.
@@ -476,8 +436,8 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard, discard)
 			.setDeck(	new Cards(CHAPEL),
 						new Cards(CHAPEL, ESTATE))
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
+			.setTp(opponentTp, opponentExpectedTp)
+			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P4");
 		userInput.append("COPPER\nESTATE\n");
 		
@@ -488,8 +448,8 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard, discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS))
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
+			.setTp(opponentTp, opponentExpectedTp)
+			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P5");
 		userInput.append("YES\nCOPPER\nMOAT\n");
 		
@@ -500,8 +460,8 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard, discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS))
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
+			.setTp(opponentTp, opponentExpectedTp)
+			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P6");
 		userInput.append("MAYBE\nYES\nMOAT\n");
 		
@@ -512,8 +472,8 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard, discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS, ESTATE))
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
+			.setTp(opponentTp, opponentExpectedTp)
+			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P7");
 		userInput.append("NO\n");
 
@@ -586,12 +546,23 @@ public class CardPlayLogicTest extends TestCase {
 	}
 	
 	@Test
+	public void testGardens() {
+	  
+	}
+	
+	@Test
+	public void testMilitia() {
+	  
+	}
+	
+	@Test
 	public void testMoneylander() {
 	  Cards discard = new Cards ( PROVINCE);
 	  Cards deck = new Cards ( COLONY);
 	  cardToPlay = MONEYLANDER;
 	  
 	  // Verify trashing copper gives player 3 extra coins.
+	  expectedTp.addCoins(3);
 	  player = new PlayerBuilder()
 		.setHand(new Cards(MONEYLANDER, MILITIA, COPPER, COPPER),
 				 new Cards(MILITIA, COPPER))
@@ -601,11 +572,12 @@ public class CardPlayLogicTest extends TestCase {
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 
-	  trash = new Trash( COLONY);
-	  expectedTrash = new Trash( COLONY, COPPER);
-	  runSimple("MONEYLANDER");
+	  trash = new Trash(COLONY);
+	  expectedTrash = new Trash(COLONY, COPPER);
+	  runSimple();
 	  
 	  // Verify a hand with no copper.
+	  expectedTp = new TurnProperties();
 	  player = new PlayerBuilder()
 		.setHand(new Cards(MONEYLANDER, MILITIA),
 				 new Cards(MILITIA))
@@ -617,7 +589,7 @@ public class CardPlayLogicTest extends TestCase {
 
 	  trash = new Trash( COLONY);
 	  expectedTrash = trash;
-	  runSimple("MONEYLANDER");	  
+	  runSimple();
 	}
 	
 	@Test
@@ -655,12 +627,34 @@ public class CardPlayLogicTest extends TestCase {
 	}
 	
 	@Test
+	public void testSmithy() {
+	  Cards deck = new Cards(COLONY);
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addCards(3);
+	  cardToPlay = SMITHY;	 
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(SMITHY, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard,discard)
+	    .setDeck(deck, deck)
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  runSimple();
+	}
+	
+	@Test
 	public void testSpy() {
 	  // Each player (including you) reveals the top card of his deck and either discards it or puts it back, your choice.
 	  trash = new Trash(COLONY);
 	  expectedTrash = trash;
 	  opponents = new TestPlayer[3];
 	  StringBuilder userInput = new StringBuilder();
+	  expectedTp.addCards(1);
+	  expectedTp.addActions(1);
 	  cardToPlay = SPY;
 	  
 	  // Player discards card.
@@ -684,8 +678,8 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(ESTATE))
 	    .setDiscard(new Cards(COPPER, ESTATE),
 	    			new Cards(COPPER, ESTATE))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P2");
 	  userInput.append("YES\n");
 	  
@@ -697,8 +691,8 @@ public class CardPlayLogicTest extends TestCase {
 		    		new Cards(ESTATE))
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P3");
 	  userInput.append("NO\nNO\n");
 	  
@@ -710,8 +704,8 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(ESTATE))
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER, GOLD))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P4");
 	  userInput.append("YES\n");
 
@@ -739,8 +733,8 @@ public class CardPlayLogicTest extends TestCase {
 		    		new Cards(CURSE, COPPER))
 	    .setDiscard(new Cards(CURSE, COPPER),
 	    			new Cards())
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P2");
 	  userInput.append("NO\n");
 	  
@@ -765,8 +759,8 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(COPPER, MILITIA))
 	    .setDiscard(new Cards(ESTATE, PROVINCE),
 	    			new Cards())
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P1");
 	  
 	  // Opponent reveals reaction. Nothing happens.
@@ -777,8 +771,8 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(COPPER, MILITIA))
 	    .setDiscard(new Cards(DUCHY),
 	    			new Cards(DUCHY))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P2");
 	  userInput.append("YES\n");
 	  
@@ -790,8 +784,8 @@ public class CardPlayLogicTest extends TestCase {
 		    		new Cards())
 	    .setDiscard(new Cards(DUCHY),
 	    			new Cards(DUCHY, MILITIA))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P3");
 	  userInput.append("NO\nTRASH\n");
 	  
@@ -816,8 +810,8 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(MILITIA))
 	    .setDiscard(new Cards(DUCHY),
 	    			new Cards(DUCHY, COPPER))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P5");
 	  userInput.append("SILVER\nTAKE\n");
 	  
@@ -887,6 +881,49 @@ public class CardPlayLogicTest extends TestCase {
 	@Test
 	public void testCouncilRoom() {
 	  
+	}
+	
+	@Test
+	public void testFestival() {
+	  Cards deck = new Cards(COLONY);
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addActions(2);
+	  expectedTp.addBuys(1);
+	  expectedTp.addCoins(2);
+	  cardToPlay = FESTIVAL;	 
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(FESTIVAL, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard,discard)
+	    .setDeck(deck, deck)
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  runSimple();
+	}
+	
+	@Test
+	public void testLaboratory() {
+	  Cards deck = new Cards(COLONY);
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addCards(2);
+	  expectedTp.addActions(1);
+	  cardToPlay = LABORATORY;	 
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(LABORATORY, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard,discard)
+	    .setDeck(deck, deck)
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  runSimple();
 	}
 	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {
