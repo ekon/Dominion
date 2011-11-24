@@ -35,7 +35,7 @@ public class TurnProperties {
   public void useCards() { cards = 0; }
   public void useAction() { actions--; }
   public void useCoins(int numCoins) { coins -= numCoins; }
-  public void userBuy() { buys--; }
+  public void useBuy() { buys--; }
   
   public int cards() { return cards; }
   public int actionsLeft() { return actions; }

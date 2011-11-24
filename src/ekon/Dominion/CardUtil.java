@@ -44,6 +44,11 @@ public class CardUtil {
 		player.hand().playAction(card);
 		uiUtil.writeCard(card);
 		
+		// Add coins,buys,actions, etc. from card.
+		Actions actions = card.actions();
+		player.tp().add(actions.cards(), actions.actions(), actions.coins(), actions.buys(),
+			actions.victoryTockens());
+		
 		switch(card) {
 			case CELLAR: playCellar(player); break;
 			case CHAPEL: playChapel(player); break;

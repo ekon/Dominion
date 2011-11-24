@@ -673,6 +673,8 @@ public class CardPlayLogicTest extends TestCase {
 	    			new Cards(COPPER, SILVER, CHAPEL))
 	    .build("P1");
 	  runSimple("WORKSHOP\nSILVER\nCHAPEL");
+	  
+	  // TODO(ekon): add test to ensure when playing card that has +coins/+buys/+actions/etc. is counted properly.
 	}
 	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {

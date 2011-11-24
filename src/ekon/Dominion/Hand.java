@@ -1,27 +1,25 @@
 package ekon.dominion;
 
-import java.util.Stack;
-
 import junit.framework.Assert;
 import ekon.dominion.Card.CardType;
 
 public class Hand {
 
 	private Cards cards;
-	private Stack<Card> actionsInPlay;
+	private Cards actionsInPlay;
 	
 	public Hand(Cards cards) {
 		Assert.assertNotNull(cards);
 		Assert.assertEquals("Hand should be initialized with only 5 cards.", 5, cards.size());
 		this.cards = cards;
-		this.actionsInPlay = new Stack<Card>();
+		this.actionsInPlay = new Cards();
 	}
 	
 	public Cards cards() { return cards; }
 	
-	public Stack<Card> actionsInPlay() { return actionsInPlay; }
-	public void playAction(Card card) { actionsInPlay.push(card); }
-	public void clearActionsInPlay() { actionsInPlay = new Stack<Card>(); }
+	public Cards actionsInPlay() { return actionsInPlay; }
+	public void playAction(Card card) { actionsInPlay.add(card); }
+	public void clearActionsInPlay() { actionsInPlay = new Cards(); }
 	
 	// TODO(ekon): Feels weird to have both getAvailableCards and get cards. Seems error-prone.
 	public Cards availableCards() {

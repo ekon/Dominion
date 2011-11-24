@@ -2,9 +2,8 @@ package ekon.dominion;
 
 import static ekon.dominion.Card.COPPER;
 import static ekon.dominion.Card.ESTATE;
-import static ekon.dominion.Player.CardPlace.DISCARD;
-import static ekon.dominion.Player.CardPlace.HAND;
-import static ekon.dominion.Player.CardPlace.NO_MOVE;
+import static ekon.dominion.Card.CardType.*;
+import static ekon.dominion.Player.CardPlace.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -79,9 +78,14 @@ public class Player implements Comparable<Player> {
   private void playCards() {
 	// Play action cards first.
 	while ((turn.actionsLeft() > 0) && hand.hasActionCards()) {
-	  Card cardToPlay = uiUtil.getCardFromUser("What card do you want to play? or NONE.", hand().availableCards(), true);
+	  Card cardToPlay = uiUtil.getCardFromUser("What card do you want to play? or NONE.", hand().availableCards().getCards(ACTION), true);
 	  if (cardToPlay != null) {
-		playAction(cardToPlay);
+		if (turn.cards() > 0) {
+		  pickUpCardsFromDeckToHand(turn.cards());
+		  turn.useCards();
+		}
+		CardUtil.playCard(cardToPlay, this, board);	
+		turn.useAction();
 	  } else {
 		return;
 	  }
@@ -90,7 +94,8 @@ public class Player implements Comparable<Player> {
 	countTreasure();
 	
 	while ((turn.coins() > 0) && (turn.buys() > 0)) {
-	  Card cardToBuy = uiUtil.getCardFromUser("What card do you want to buy with " + turn.coins() + " coins?", board.getAvailableCardCostingUpTo(turn.coins()), true);
+	  Card cardToBuy = uiUtil.getCardFromUser("What card do you want to buy with " + turn.coins() + " coins?",
+		  board.getAvailableCardCostingUpTo(turn.coins()), true);
 	  if (cardToBuy != null) {
 		buyCard(cardToBuy);
 	  } else {
@@ -98,8 +103,9 @@ public class Player implements Comparable<Player> {
 	  }
 	}
 	
-	// Move used up action cards to discard;
-	moveUserActionsToDiscard();
+	// Move used up action cards to discard.
+	mover().from(HAND).to(DISCARD).move(hand.actionsInPlay());
+	hand.clearActionsInPlay();
   }
   
   private void countTreasure() {
@@ -110,29 +116,10 @@ public class Player implements Comparable<Player> {
 	}
   }
   
-  private void playAction(Card card) {
-	mover().from(HAND).to(DISCARD).move(card);
-	Actions actions = card.actions();
-	
-	turn.add(actions.cards(), actions.actions(), actions.coins(), actions.buys(),
-		actions.victoryTockens());
-	
-	if (turn.cards() > 0) {
-	  pickUpCardsFromDeckToHand(turn.cards());
-	  turn.useCards();
-	}
-	
-	if (!card.description().equals("")) {
-	  CardUtil.playCard(card, this, board);
-	}
-	
-	turn.useAction();
-  }
-  
   private void buyCard(Card card) {
 	// Buy cards from board & put in discard pile.
 	turn.useCoins(card.cost());
-	turn.userBuy();
+	turn.useBuy();
 	board.buy(card);
 	
 	mover().to(DISCARD).move(card);
@@ -168,12 +155,6 @@ public class Player implements Comparable<Player> {
 	}
 	
 	return pickedUpCards;
-  }
-  
-  public void moveUserActionsToDiscard() {
-	discard.add(hand.actionsInPlay());
-	hand.clearActionsInPlay();
-	// TODO(ekon): Should I remove them from hand?
   }
   
   public int getVictoryPoints() {
