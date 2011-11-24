@@ -213,18 +213,18 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testMoat() {
-	  Cards deck = new Cards(COLONY);
 	  Cards discard = new Cards(MILITIA);
 	  trash = new Trash(ESTATE);
 	  expectedTrash = trash;
 	  expectedTp.addCards(2);
-	  cardToPlay = MOAT;	 
+	  cardToPlay = MOAT;
 	  
 	  player = new PlayerBuilder()
 		.setHand(new Cards(MOAT, COPPER),
-				 new Cards(COPPER))
+				 new Cards(COPPER, ESTATE, DUKE))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck)
+	    .setDeck(new Cards(ESTATE, DUKE),
+	    		 new Cards())
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -279,7 +279,6 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testVillage() {
-	  Cards deck = new Cards(COLONY);
 	  Cards discard = new Cards(MILITIA);
 	  trash = new Trash(ESTATE);
 	  expectedTrash = trash;
@@ -289,9 +288,10 @@ public class CardPlayLogicTest extends TestCase {
 	  
 	  player = new PlayerBuilder()
 		.setHand(new Cards(VILLAGE, COPPER),
-				 new Cards(COPPER))
+				 new Cards(COPPER, COLONY))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck)
+	    .setDeck(new Cards(COLONY),
+	    		 new Cards())
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -682,7 +682,6 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testSmithy() {
-	  Cards deck = new Cards(COLONY);
 	  Cards discard = new Cards(MILITIA);
 	  trash = new Trash(ESTATE);
 	  expectedTrash = trash;
@@ -691,9 +690,10 @@ public class CardPlayLogicTest extends TestCase {
 	  
 	  player = new PlayerBuilder()
 		.setHand(new Cards(SMITHY, COPPER),
-				 new Cards(COPPER))
+				 new Cards(COPPER, ESTATE, DUKE, MOAT))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck)
+	    .setDeck(new Cards(ESTATE, DUKE, MOAT),
+	    		 new Cards())
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -702,7 +702,7 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testSpy() {
-	  // Each player (including you) reveals the top card of his deck and either discards it or puts it back, your choice.
+	  // Each player (including you) reveals the top card of his deck and either discards it or puts it back, your choice.	  
 	  trash = new Trash(COLONY);
 	  expectedTrash = trash;
 	  opponents = new TestPlayer[3];
@@ -714,11 +714,11 @@ public class CardPlayLogicTest extends TestCase {
 	  // Player discards card.
 	  player = new PlayerBuilder()
 		.setHand(	new Cards(SPY, ESTATE),
-					new Cards(ESTATE))
-	    .setDeck(	new Cards(ESTATE),
+					new Cards(ESTATE, DUKE))
+	    .setDeck(	new Cards(PROVINCE, DUKE), // This is a little tricky because cards from deck get first picked up and then peeked.
 					new Cards())
 	    .setDiscard(new Cards(COPPER),
-	    			new Cards(COPPER, ESTATE))
+	    			new Cards(COPPER, PROVINCE))
 		.setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -768,9 +768,9 @@ public class CardPlayLogicTest extends TestCase {
 	  // Verify player putting card back on deck.
 	  player = new PlayerBuilder()
 		.setHand(	new Cards(SPY, ESTATE),
-					new Cards(ESTATE))
-		.setDeck(	new Cards(ESTATE),
-		    		new Cards(ESTATE))
+					new Cards(ESTATE, DUKE))
+		.setDeck(	new Cards(PROVINCE, DUKE),
+		    		new Cards(PROVINCE))
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER))
 		.setTp(tp, expectedTp)
@@ -941,7 +941,7 @@ public class CardPlayLogicTest extends TestCase {
 	  	// The player doesn't actually gain 4 cards here, but rather later.
 	  // TODO(ekon): is this the right type of logic? Shouldn't we acknowledge card pick ups right away?
 		.setHand(	new Cards(MILITIA, COUNCIL_ROOM),
-					new Cards(MILITIA))
+					new Cards(MILITIA, ESTATE, GOLD, SILVER, ESTATE))
 	    .setDeck(new Cards(ESTATE, GOLD, SILVER, ESTATE),
 	    		 new Cards())
 	    .setDiscard(discard)
@@ -993,7 +993,6 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testLaboratory() {
-	  Cards deck = new Cards(COLONY);
 	  Cards discard = new Cards(MILITIA);
 	  trash = new Trash(ESTATE);
 	  expectedTrash = trash;
@@ -1003,9 +1002,10 @@ public class CardPlayLogicTest extends TestCase {
 	  
 	  player = new PlayerBuilder()
 		.setHand(new Cards(LABORATORY, COPPER),
-				 new Cards(COPPER))
+				 new Cards(COPPER, ESTATE, DUKE))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck)
+	    .setDeck(new Cards(ESTATE, DUKE),
+	    		 new Cards())
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");

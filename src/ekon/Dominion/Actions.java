@@ -34,23 +34,23 @@ public class Actions {
 	this.description = description;
   }
   
-  public int cards() {
+  public int plusCards() {
 	return cards;
   }
   
-  public int actions() {
+  public int plusActions() {
 	return actions;
   }
   
-  public int coins() {
+  public int plusCoins() {
 	return coins;
   }
   
-  public int buys() {
+  public int plusBuys() {
 	return buys;
   }
   
-  public int victoryTockens() {
+  public int plusVictoryTokens() {
 	return victoryTokens;
   }
   

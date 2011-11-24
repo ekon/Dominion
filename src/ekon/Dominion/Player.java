@@ -80,10 +80,6 @@ public class Player implements Comparable<Player> {
 	while ((turn.actions() > 0) && hand.hasActionCards()) {
 	  Card cardToPlay = uiUtil.getCardFromUser("What card do you want to play? or NONE.", hand().availableCards().getCards(ACTION), true);
 	  if (cardToPlay != null) {
-		if (turn.cards() > 0) {
-		  pickUpCardsFromDeckToHand(turn.cards());
-		  turn.useCards();
-		}
 		CardUtil.playCard(cardToPlay, this, board);	
 		turn.useAction();
 	  } else {
@@ -111,7 +107,7 @@ public class Player implements Comparable<Player> {
   private void countTreasure() {
 	for (Card card : hand.cards()) {
 	  if (card.types().contains(CardType.TREASURE)) {
-		turn.addCoins(card.actions().coins());
+		turn.addCoins(card.actions().plusCoins());
 	  }
 	}
   }
@@ -128,11 +124,6 @@ public class Player implements Comparable<Player> {
   private void pickUpNewHand() {
 	Cards newCards = pickUpCardsFromDeck(5);
 	hand = new Hand(newCards);
-  }
-  
-  public void pickUpCardsFromDeckToHand(int numToPickUp) {
-	Cards cards = pickUpCardsFromDeck(numToPickUp);
-	hand.add(cards);
   }
   
   /** @returns given number of cards picked up from deck. Re-shuffles discard & puts into deck, if necessary. */

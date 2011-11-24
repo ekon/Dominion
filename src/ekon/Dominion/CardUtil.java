@@ -46,8 +46,14 @@ public class CardUtil {
 		
 		// Add coins,buys,actions, etc. from card.
 		Actions actions = card.actions();
-		player.tp().add(actions.cards(), actions.actions(), actions.coins(), actions.buys(),
-			actions.victoryTockens());
+		player.tp().add(actions.plusCards(), actions.plusActions(), actions.plusCoins(), actions.plusBuys(),
+			actions.plusVictoryTokens());
+		
+		// If card has any +cards, then pick them up.
+		if (actions.plusCards() > 0 ) {
+		  player.mover().from(DECK).to(HAND).move(actions.plusCards());
+		  //player.tp().useCards(); // TODO(ekon): Do I actually need this?
+		}
 		
 		// For cards that have a description with other actions to follow, do them.
 		if (!card.description().equals("")) {
@@ -78,7 +84,7 @@ public class CardUtil {
 		Cards cards = uiUtil.getCardsFromUser("Card(s) to discard? or DONE?", player.hand().availableCards(), true);
 		if (cards != null) {
 			player.mover().from(HAND).to(DISCARD).move(cards);
-			player.pickUpCardsFromDeckToHand(cards.size());
+			player.mover().from(DECK).to(HAND).move(cards.size());
 			uiUtil.tellUser("	" + player.name() + "'s new hand: " + player.hand().toString());
 		}
 	}

@@ -40,7 +40,7 @@ public class TurnProperties {
 	  add(previousTP.cards, previousTP.actions, previousTP.coins, previousTP.buys, previousTP.victoryTokens);
   }
 
-  public void useCards() { cards = 0; }
+  public void useCards() { cards = 0; } // TODO(ekon): Do I actually need this one becaues all cards get picked up at once?
   public void useAction() { actions--; }
   public void useCoins(int numCoins) { coins -= numCoins; }
   public void useBuy() { buys--; }
