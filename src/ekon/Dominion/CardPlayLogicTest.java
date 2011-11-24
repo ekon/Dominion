@@ -934,7 +934,42 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testCouncilRoom() {
+	  Cards discard = new Cards(MILITIA);
+	  opponents = new TestPlayer[2];
+	  trash = new Trash(COLONY);
+	  expectedTrash = trash;
+	  expectedTp.addCards(4);
+	  opponentExpectedTp.addCards(1);
+	  cardToPlay = COUNCIL_ROOM;
+
+	  player = new PlayerBuilder()
+		.setHand(	new Cards(MILITIA, COUNCIL_ROOM),
+					new Cards(MILITIA, ESTATE, GOLD, SILVER, ESTATE))
+	    .setDeck(new Cards(ESTATE, GOLD, SILVER, ESTATE),
+	    		 new Cards())
+	    .setDiscard(discard)
+		.setTp(tp, expectedTp)
+	    .build("P1");
 	  
+	  opponents[0] = new PlayerBuilder()
+		.setHand(	new Cards(MILITIA),
+					new Cards(MILITIA, ESTATE))
+	    .setDeck(new Cards(ESTATE),
+	    		 new Cards())
+	    .setDiscard(discard)
+		.setTp(opponentTp, opponentExpectedTp)
+	    .build("P2");
+	  
+	  opponents[1] = new PlayerBuilder()
+		.setHand(	new Cards(MILITIA),
+					new Cards(MILITIA, ESTATE))
+	    .setDeck(new Cards(ESTATE),
+	    		 new Cards())
+	    .setDiscard(discard)
+		.setTp(opponentTp, opponentExpectedTp)
+	    .build("P3");
+	  
+	  run();
 	}
 	
 	@Test

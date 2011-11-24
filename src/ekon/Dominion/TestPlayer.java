@@ -71,6 +71,9 @@ public class TestPlayer extends Player {
 	private TurnProperties expectedTp, expectedNextTp;
 	
 	public TestPlayer build(String name) {
+	  if (expectedTp == null) { expectedTp = new TurnProperties(); }
+	  if (nextTp == null) { nextTp = new TurnProperties(); }
+	  
 	  return new TestPlayer(name, handCards, deckCards, discardCards, tp, nextTp,
 		  expectedHand, expectedDeck, expectedDiscard, expectedTp, expectedNextTp);
 	}
@@ -80,16 +83,37 @@ public class TestPlayer extends Player {
 	  this.expectedHand = expected;
 	  return this;
 	}
+
+	/** This is used when initial = expected. */
+	public PlayerBuilder setHand(Cards cards) {
+	  this.handCards = new Cards(cards);
+	  this.expectedHand = new Cards(cards);
+	  return this;
+	}
 	
 	public PlayerBuilder setDeck(Cards initial, Cards expected) {
 	  this.deckCards = new Cards(initial);
 	  this.expectedDeck = expected;
 	  return this;
 	}
+
+	/** This is used when initial = expected. */
+	public PlayerBuilder setDeck(Cards cards) {
+	  this.deckCards = new Cards(cards);
+	  this.expectedDeck = new Cards(cards);
+	  return this;
+	}
 	
 	public PlayerBuilder setDiscard(Cards initial, Cards expected) {
 	  this.discardCards = new Cards(initial);
 	  this.expectedDiscard = expected;
+	  return this;
+	}
+	
+	/** This is used when initial = expected. */
+	public PlayerBuilder setDiscard(Cards cards) {
+	  this.discardCards = new Cards(cards);
+	  this.expectedDiscard = new Cards(cards);
 	  return this;
 	}
 	
