@@ -218,9 +218,10 @@ public class CardUtil {
 	  Cards availableActions = player.hand().availableCards().getCards(ACTION);
 	  if ((availableActions == null) || (availableActions.size() == 0)) {
 		uiUtil.tellUser("You have no available actions.");
+		return;
 	  } else if (availableActions.size() == 1) {
 		cardToPlay = availableActions.get(0);
-	  } else {	  
+	  } else {
 		cardToPlay = uiUtil.getCardFromUser("Choose an action card to play twice.", availableActions);
 	  }
 	  

@@ -636,6 +636,45 @@ public class CardPlayLogicTest extends TestCase {
 	  run(userInput.toString());
 	}
 	
+	@Test
+	public void testThroneRoom() {
+	  Cards deck = new Cards(MILITIA);
+	  trash = new Trash(COLONY);
+	  expectedTrash = trash;
+	  cardToPlay = THRONE_ROOM;
+	  actionCards = new Cards(CHAPEL);
+	  
+	  // Player has no action cards.
+	  player = new PlayerBuilder()
+		.setHand(	new Cards(THRONE_ROOM, ESTATE),
+					new Cards(ESTATE))
+	    .setDeck(deck, deck)
+	    .setDiscard(new Cards(COPPER),
+	    			new Cards(COPPER))
+	    .build("P1");
+	  runSimple("");
+	  
+	  // Player has 1 action card (workshop - gain 2 cards costing up to 4).
+	  player = new PlayerBuilder()
+		.setHand(	new Cards(THRONE_ROOM, ESTATE, WORKSHOP),
+					new Cards(ESTATE))
+	    .setDeck(deck, deck)
+	    .setDiscard(new Cards(COPPER),
+	    			new Cards(COPPER, SILVER, CHAPEL))
+	    .build("P1");
+	  runSimple("SILVER\nCHAPEL");
+	  
+	  // Player has 2 action cards, but chooses to play workshop (gain 2 cards costing up to 4).
+	  player = new PlayerBuilder()
+		.setHand(	new Cards(THRONE_ROOM, ESTATE, WORKSHOP, MILITIA),
+					new Cards(ESTATE))
+	    .setDeck(deck, deck)
+	    .setDiscard(new Cards(COPPER),
+	    			new Cards(COPPER, SILVER, CHAPEL))
+	    .build("P1");
+	  runSimple("SILVER\nCHAPEL");
+	}
+	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {
 		return new PlayerBuilder()
 			.setHand( 	new Cards(REMODEL, COPPER),
