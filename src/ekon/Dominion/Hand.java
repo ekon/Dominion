@@ -25,11 +25,11 @@ public class Hand {
 	
 	// TODO(ekon): Feels weird to have both getAvailableCards and get cards. Seems error-prone.
 	public Cards availableCards() {
-		Cards availableActions = new Cards(cards);
+		Cards availableCards = new Cards(cards);
 		if (actionsInPlay != null) {
-			availableActions.remove(actionsInPlay);
+			availableCards.remove(actionsInPlay);
 		}
-		return availableActions;
+		return availableCards;
 	}
 	
 	public boolean contains(Card card) {

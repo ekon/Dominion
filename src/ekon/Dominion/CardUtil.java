@@ -57,7 +57,7 @@ public class CardUtil {
 			case REMODEL: playRemodel(player, board); break;
 			case SPY: playSpy(player); break;
 			case THIEF: playThief(player, board); break;
-			case THRONE_ROOM: playThroneRoom(player); break;
+			case THRONE_ROOM: playThroneRoom(player, board); break;
 			default:
 				throw new GameException(GameException.Type.CODE_ISSUE, "Card " + card.name() + " doesn't have playing instructions.");
 		}
@@ -210,8 +210,21 @@ public class CardUtil {
 	  }
 	}
 	
-	private static void playThroneRoom(Player player) {
+	// TODO(ekon): Add the rules around playing this card twice & ensure it works properly.
+	private static void playThroneRoom(Player player, Board board) {
 	  // Choose an action card in your hand. Play it twice.
+	  Card cardToPlay = null;
 	  
+	  Cards availableActions = player.hand().availableCards().getCards(ACTION);
+	  if ((availableActions == null) || (availableActions.size() == 0)) {
+		uiUtil.tellUser("You have no available actions.");
+	  } else if (availableActions.size() == 1) {
+		cardToPlay = availableActions.get(0);
+	  } else {	  
+		cardToPlay = uiUtil.getCardFromUser("Choose an action card to play twice.", availableActions);
+	  }
+	  
+	  playCard(cardToPlay, player, board);
+	  playCard(cardToPlay, player, board);
 	}
 }
