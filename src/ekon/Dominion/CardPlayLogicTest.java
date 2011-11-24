@@ -489,7 +489,7 @@ public class CardPlayLogicTest extends TestCase {
 	  // Player discards card.
 	  player = new PlayerBuilder()
 		.setHand(	new Cards( SPY, ESTATE ),
-					new Cards(ESTATE))
+					new Cards( ESTATE ))
 	    .setDeck(	new Cards( ESTATE ),
 					new Cards())
 	    .setDiscard(new Cards( COPPER ),
@@ -500,7 +500,7 @@ public class CardPlayLogicTest extends TestCase {
 	  // Opponent reveals reaction. Nothing happens.
 	  opponents[0] = new PlayerBuilder()
 		.setHand(	new Cards( MILITIA, MOAT),
-					new Cards (MILITIA, MOAT))
+					new Cards( MILITIA, MOAT))
 		.setDeck(	new Cards( ESTATE ),
 		   			new Cards( ESTATE ))
 	    .setDiscard(new Cards( COPPER, ESTATE ),
@@ -511,7 +511,7 @@ public class CardPlayLogicTest extends TestCase {
 	  // Opponent decides to not reveal reaction. Player chooses to put card back on deck.
 	  opponents[1] = new PlayerBuilder()
 		.setHand(	new Cards( MILITIA, MOAT ),
-					new Cards (MILITIA, MOAT))
+					new Cards( MILITIA, MOAT))
 		.setDeck(	new Cards( ESTATE ),
 		    		new Cards( ESTATE ))
 	    .setDiscard(new Cards( COPPER ),
@@ -522,7 +522,7 @@ public class CardPlayLogicTest extends TestCase {
 	  // Opponent does not have reaction to reveal. Player chooses to put card in discard.
 	  opponents[2] = new PlayerBuilder()
 		.setHand(	new Cards( MILITIA, COPPER ),
-					new Cards (MILITIA, COPPER ))
+					new Cards( MILITIA, COPPER ))
 		.setDeck(	new Cards( ESTATE, GOLD ),
 		   			new Cards( ESTATE ))
 	    .setDiscard(new Cards( COPPER ),
@@ -535,7 +535,7 @@ public class CardPlayLogicTest extends TestCase {
 	  // Verify player putting card back on deck.
 	  player = new PlayerBuilder()
 		.setHand(	new Cards( SPY, ESTATE ),
-					new Cards (ESTATE))
+					new Cards( ESTATE))
 		.setDeck(	new Cards( ESTATE ),
 		    		new Cards( ESTATE ))
 	    .setDiscard(new Cards( COPPER ),
@@ -547,7 +547,7 @@ public class CardPlayLogicTest extends TestCase {
 	  opponents = new TestPlayer[1];
 	  opponents[0] = new PlayerBuilder()
 		.setHand(	new Cards( ESTATE ),
-					new Cards (ESTATE))
+					new Cards( ESTATE))
 		.setDeck(	new Cards(),
 		    		new Cards( CURSE, COPPER ))
 	    .setDiscard(new Cards( CURSE, COPPER ),
