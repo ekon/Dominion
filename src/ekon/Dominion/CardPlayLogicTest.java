@@ -29,6 +29,7 @@ public class CardPlayLogicTest extends TestCase {
 	private TurnProperties tp = new TurnProperties(), nextTp = new TurnProperties();
 	private TurnProperties expectedTp = new TurnProperties(), expectedNextTp = new TurnProperties();
 
+	// TODO(ekon): Not sure if these are needed? Especially for picking up cards, this is NOT getting tracked.
 	private TurnProperties opponentTp = new TurnProperties(), opponentNextTp = new TurnProperties();
 	private TurnProperties opponentExpectedTp = new TurnProperties(), opponentExpectedNextTp = new TurnProperties();
 
@@ -934,7 +935,6 @@ public class CardPlayLogicTest extends TestCase {
 	  expectedTrash = trash;
 	  expectedTp.addCards(4);
 	  expectedTp.addBuys(1);
-	  opponentExpectedTp.addCards(1);
 	  cardToPlay = COUNCIL_ROOM;
 
 	  player = new PlayerBuilder()
@@ -954,7 +954,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(new Cards(ESTATE),
 	    		 new Cards())
 	    .setDiscard(discard)
-		.setTp(opponentTp, opponentExpectedTp)
 	    .build("P2");
 	  
 	  opponents[1] = new PlayerBuilder()
@@ -963,7 +962,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(new Cards(ESTATE),
 	    		 new Cards())
 	    .setDiscard(discard)
-		.setTp(opponentTp, opponentExpectedTp)
 	    .build("P3");
 	  
 	  run("");
