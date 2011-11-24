@@ -667,12 +667,12 @@ public class CardPlayLogicTest extends TestCase {
 	  // Player has 2 action cards, but chooses to play workshop (gain 2 cards costing up to 4).
 	  player = new PlayerBuilder()
 		.setHand(	new Cards(THRONE_ROOM, ESTATE, WORKSHOP, MILITIA),
-					new Cards(ESTATE))
+					new Cards(ESTATE, MILITIA))
 	    .setDeck(deck, deck)
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER, SILVER, CHAPEL))
 	    .build("P1");
-	  runSimple("SILVER\nCHAPEL");
+	  runSimple("WORKSHOP\nSILVER\nCHAPEL");
 	}
 	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {
