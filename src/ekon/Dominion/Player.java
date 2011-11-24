@@ -244,13 +244,17 @@ public class Player implements Comparable<Player> {
 	}
 	
 	public void move(Cards cards) {
-	  move(cards, false);
+	  for (Card card : cards) {
+		move(card);
+	  }
 	}
 	
 	public void move(Cards cards, boolean isNullCardsAnOption) {
-	  for (Card card : cards) {
-		move(card, isNullCardsAnOption);
+	  if (cards == null) {
+		if (isNullCardsAnOption) { return; }
+		else { throw new UnsupportedOperationException("Did you mean to use move(Card) instead?"); }
 	  }
+	  move(cards);
 	}
 	
 	public Card move() {

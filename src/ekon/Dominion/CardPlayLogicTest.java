@@ -547,12 +547,66 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testGardens() {
-	  
+	  // TODO(ekon): This only matters at the end of the game, so may need to go in another test class.
 	}
 	
 	@Test
 	public void testMilitia() {
+	  // Opponents discard down to 3 cards, unless show reaction.
+	  StringBuilder userInput = new StringBuilder();
+	  Cards deck = new Cards(PROVINCE);
+	  Cards discard = new Cards(COPPER);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addCoins(2);
+	  opponents = new TestPlayer[3];
+	  cardToPlay = MILITIA;
 	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(MILITIA, DUCHY),
+				 new Cards(DUCHY))
+	    .setDiscard(discard, discard)
+	    .setDeck(deck, deck)
+		.setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  
+	  // Opponent shows reaction, doesn't have to discard.
+	  opponents[0] = new PlayerBuilder()
+	  	.setHand(new Cards(MOAT, DUCHY),
+			 	 new Cards(MOAT, DUCHY))
+		.setDiscard(discard, discard)
+		.setDeck(deck, deck)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
+		.build("P2");
+	  userInput.append("YES\n");
+	  
+	  // Opponent chooses to not show reaction, has to discard.
+	  opponents[1] = new PlayerBuilder()
+	  	.setHand(new Cards(GOLD, LABORATORY, COPPER, ESTATE, MOAT),
+			 	 new Cards(GOLD, LABORATORY, COPPER))
+		.setDiscard(new Cards(ESTATE),
+					new Cards(ESTATE, ESTATE, MOAT))
+		.setDeck(deck, deck)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
+		.build("P3");
+	  userInput.append("NO\nESTATE,MOAT\n");
+	  
+	  // Opponent doesn't have reaction, has to discard.
+	  opponents[2] = new PlayerBuilder()
+	  	.setHand(new Cards(GOLD, LABORATORY, COPPER, ESTATE, DUCHY),
+			 	 new Cards(GOLD, LABORATORY, COPPER))
+		.setDiscard(new Cards(ESTATE),
+					new Cards(ESTATE, DUCHY, ESTATE))
+		.setDeck(deck, deck)
+		.setTp(opponentTp, opponentExpectedTp)
+		.setNextTp(opponentNextTp, opponentExpectedNextTp)
+		.build("P4");
+	  userInput.append("ESTATE,DUCHY\n");
+	  
+	  run(userInput.toString());
 	}
 	
 	@Test
