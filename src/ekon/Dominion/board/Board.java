@@ -180,7 +180,7 @@ public class Board {
   
   @Override
   public int hashCode() {
-	return Arrays.hashCode(new long[] { actionCards.hashCode(), decks.hashCode(), trash.hashCode()});
+	return Arrays.hashCode(new Object[] { actionCards, decks, trash});
   }
 
   @Override

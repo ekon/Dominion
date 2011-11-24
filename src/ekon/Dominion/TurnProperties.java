@@ -1,5 +1,7 @@
 package ekon.dominion;
 
+import java.util.Arrays;
+
 // @formatter:off
 public class TurnProperties {
 
@@ -12,6 +14,12 @@ public class TurnProperties {
 	coins = 0;
 	buys = 1;
 	victoryTokens = 0;
+  }
+  
+  // This is only allowed for testing.
+  public TurnProperties(TurnProperties tp) {
+	new SecurityUtil().verifyCallingClassIsTest();
+	add(tp.cards(), tp.actions(), tp.coins(), tp.buys(), tp.victoryTokens());
   }
   
   public void addCards(int numCards) { cards += numCards; }
@@ -38,8 +46,32 @@ public class TurnProperties {
   public void useBuy() { buys--; }
   
   public int cards() { return cards; }
-  public int actionsLeft() { return actions; }
+  public int actions() { return actions; }
   public int coins() { return coins; }
   public int buys() { return buys; }
   public int victoryTokens() { return victoryTokens; }
+
+  @Override
+  public String toString() {
+	return "TurnProperties [cards=" + cards + ", actions=" + actions + ", coins=" + coins + ", buys=" + buys + ", victoryTokens=" + victoryTokens + "]";
+  }
+
+  @Override
+  public int hashCode() {
+	return Arrays.hashCode(new Object[] { cards, actions, coins, buys, victoryTokens });
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+	if (this == obj) return true;
+	if (obj == null) return false;
+	if (getClass() != obj.getClass()) return false;
+	TurnProperties other = (TurnProperties) obj;
+	if (actions != other.actions) return false;
+	if (buys != other.buys) return false;
+	if (cards != other.cards) return false;
+	if (coins != other.coins) return false;
+	if (victoryTokens != other.victoryTokens) return false;
+	return true;
+  }
 }

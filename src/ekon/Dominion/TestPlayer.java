@@ -2,9 +2,8 @@ package ekon.dominion;
 
 import java.util.Stack;
 
+import static junit.framework.Assert.*;
 import ekon.dominion.board.Board;
-
-import junit.framework.Assert;
 
 public class TestPlayer extends Player {
   
@@ -13,20 +12,28 @@ public class TestPlayer extends Player {
   private Cards handCards, deckCards, discardCards;
   private Cards expectedHand, expectedDeck, expectedDiscard;
   
+  private TurnProperties tp, nextTp;
+  private TurnProperties expectedTp, expectedNextTp; 
+  
   public TestPlayer(String name) {
-	this(name, new Cards(), new Cards(), new Cards(), new Cards(), new Cards(), new Cards());
+	this(name, new Cards(), new Cards(), new Cards(), new TurnProperties(), new TurnProperties(),
+		new Cards(), new Cards(), new Cards(), new TurnProperties(), new TurnProperties());
   }
   
-  public TestPlayer(String name, Cards handCards, Cards deckCards, Cards discardCards,
-	  Cards expectedHand, Cards expectedDeck, Cards expectedDiscard) {
+  private TestPlayer(String name, Cards handCards, Cards deckCards, Cards discardCards, TurnProperties tp, TurnProperties nextTp,
+	  Cards expectedHand, Cards expectedDeck, Cards expectedDiscard, TurnProperties expectedTp, TurnProperties expectedNextTp) {
 	super(name);
 	this.handCards = handCards;
 	this.deckCards = deckCards;
 	this.discardCards = discardCards;
+	this.tp = tp;
+	this.nextTp = nextTp;
 	
 	this.expectedHand = expectedHand;
 	this.expectedDeck = expectedDeck;
 	this.expectedDiscard = expectedDiscard;
+	this.expectedTp = expectedTp;
+	this.expectedNextTp = expectedNextTp;
   }
   
   @SuppressWarnings("unchecked")
@@ -39,7 +46,7 @@ public class TestPlayer extends Player {
 	hand.initForTesting(handCards);
 	
 	initPlayer(opponents, board);
-	initForTesting(hand, (Stack<Card>) deckStack.clone(), discardCards);
+	initForTesting(hand, (Stack<Card>) deckStack.clone(), discardCards, tp, nextTp);
   }
   
   public void verify() {
@@ -47,18 +54,25 @@ public class TestPlayer extends Player {
 	deckStack.addAll(expectedDeck.asList());
 	
 	// TODO(ekon): Don't care about order. May want to though.
-	Assert.assertEquals(expectedHand, hand().availableCards());
-	Assert.assertTrue(deckStack.containsAll(deck())); // Don't care about order.
-	Assert.assertEquals(expectedDiscard, discard());
+	assertEquals(expectedHand, hand().availableCards());
+	assertTrue(deckStack.containsAll(deck())); // Don't care about order.
+	assertEquals(expectedDiscard, discard());
+	
+	assertEquals(expectedTp, tp());
+	assertEquals(expectedNextTp, nextTp());
   }
   
   public static class PlayerBuilder {
 	
 	private Cards handCards, deckCards, discardCards;
 	private Cards expectedHand, expectedDeck, expectedDiscard;
+	  
+	private TurnProperties tp, nextTp;
+	private TurnProperties expectedTp, expectedNextTp;
 	
 	public TestPlayer build(String name) {
-	  return new TestPlayer(name, handCards, deckCards, discardCards, expectedHand, expectedDeck, expectedDiscard);
+	  return new TestPlayer(name, handCards, deckCards, discardCards, tp, nextTp,
+		  expectedHand, expectedDeck, expectedDiscard, expectedTp, expectedNextTp);
 	}
 	
 	public PlayerBuilder setHand(Cards initial, Cards expected) {
@@ -76,6 +90,18 @@ public class TestPlayer extends Player {
 	public PlayerBuilder setDiscard(Cards initial, Cards expected) {
 	  this.discardCards = new Cards(initial);
 	  this.expectedDiscard = expected;
+	  return this;
+	}
+	
+	public PlayerBuilder setTp(TurnProperties tp, TurnProperties expectedTp) {
+	  this.tp = new TurnProperties(tp);
+	  this.expectedTp = new TurnProperties(expectedTp);
+	  return this;
+	}
+	
+	public PlayerBuilder setNextTp(TurnProperties nextTp, TurnProperties expectedNextTp) {
+	  this.nextTp = new TurnProperties(nextTp);
+	  this.expectedNextTp = new TurnProperties(expectedNextTp);
 	  return this;
 	}
   }

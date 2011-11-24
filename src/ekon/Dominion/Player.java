@@ -24,7 +24,8 @@ public class Player implements Comparable<Player> {
   private Cards discard = new Cards(); // Discard doesn't have to be a stack, since we don't care what went on top.
   private Players opponents;
   private Board board;
-  
+
+  private TurnProperties turn;
   private TurnProperties nextTurn;
   
   private int victoryTokens;
@@ -38,7 +39,7 @@ public class Player implements Comparable<Player> {
   public Cards discard() { return discard; }
   public Players opponents() { return opponents; }
   public TurnProperties tp() { return turn; }
-  public TurnProperties nextTP() { return nextTurn; }
+  public TurnProperties nextTp() { return nextTurn; }
   public CardMover mover() { return new CardMover(); }
   
   // @formatter:on
@@ -50,15 +51,15 @@ public class Player implements Comparable<Player> {
 	deck.addAll(INITIAL_CARD_SET.asList());
 	Collections.shuffle(deck);
 	pickUpNewHand();
+	
 	turn = new TurnProperties();
   }
-  
-  private TurnProperties turn;
   
   public void takeTurn() {
 	uiUtil.tellUser(name + "'s turn. " + toString());
 	
 	nextTurn = new TurnProperties();
+	
 	playCards();
 	
 	victoryTokens += turn.victoryTokens();
@@ -76,7 +77,7 @@ public class Player implements Comparable<Player> {
   
   private void playCards() {
 	// Play action cards first.
-	while ((turn.actionsLeft() > 0) && hand.hasActionCards()) {
+	while ((turn.actions() > 0) && hand.hasActionCards()) {
 	  Card cardToPlay = uiUtil.getCardFromUser("What card do you want to play? or NONE.", hand().availableCards().getCards(ACTION), true);
 	  if (cardToPlay != null) {
 		if (turn.cards() > 0) {
@@ -165,18 +166,20 @@ public class Player implements Comparable<Player> {
 	return victoryTokens + CardUtil.calculateVictoryPoints(allCards);
   }
   
-  public void initForTesting(Hand hand, Stack<Card> deck, Cards discard) {
+  public void initForTesting(Hand hand, Stack<Card> deck, Cards discard, TurnProperties turn, TurnProperties nextTurn) {
 	SecurityUtil securityUtil = new SecurityUtil();
 	securityUtil.verifyCallingClassIsTest();
 	
 	this.hand = hand;
 	this.discard = discard;
 	this.deck = deck;
+	this.turn = turn;
+	this.nextTurn = nextTurn;
   }
   
   // TODO(ekon): Look at where else this needs to be called.
   private void replenishDeckFromDiscard() {
-	Collections.shuffle(discard.asList());	
+	Collections.shuffle(discard.asList());
 	for (Card card : discard.asList()) {
 	  deck.push(card);
 	}
@@ -279,8 +282,7 @@ public class Player implements Comparable<Player> {
   
   @Override
   public int hashCode() {
-	return Arrays.hashCode(new long[] { name.hashCode(), hand.hashCode(), deck.hashCode(), discard.hashCode(),
-		opponents.hashCode(), victoryTokens, board.hashCode() });
+	return Arrays.hashCode(new Object[] { name, hand, deck, discard, opponents, victoryTokens, board });
   }
   
   @Override
