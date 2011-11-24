@@ -65,9 +65,9 @@ public class CardUtil {
     			case SPY: playSpy(player); break;
     			case THIEF: playThief(player, board); break;
     			case THRONE_ROOM: playThroneRoom(player, board); break;
-    			case COUNCIL_ROOM: playCouncilRoom(player);
-    			case LIBRARY: playLibrary(player);
-    			case MINE: playMine(player);
+    			case COUNCIL_ROOM: playCouncilRoom(player); break;
+    			case LIBRARY: playLibrary(player); break;
+    			case MINE: playMine(player); break;
     			default:
     				throw new GameException(GameException.Type.CODE_ISSUE, "Card " + card.name() + " doesn't have playing instructions.");
     		}

@@ -258,20 +258,31 @@ public class Player implements Comparable<Player> {
 	}
 	
 	public Card move() {
-	  if (to != NO_MOVE) {
-		throw new UnsupportedOperationException("Did you mean to use move(Card) instead?");
-	  }
+	  Card card;
 	  
 	  switch(from) {
 		case DECK:
 		  if (deck.size() > 0) {
-			return deck.pop();
+			card = deck.pop();
+			break;
 		  } else {
 			replenishDeckFromDiscard();
-			return deck.pop();
+			card = deck.pop();
+			break;
 		  }
 		default: throw new UnsupportedOperationException("Did you mean to use move(Card) instead?");
 	  }
+	  
+	  switch (to) {
+		case HAND: 		hand.add(card); break;
+		case DECK: 		deck.push(card); break;
+		case DISCARD: 	discard.add(card); break;
+		case TRASH: 	board.trash(card); break;
+		case NO_MOVE:	break;
+  	  	default: 		throw new IllegalArgumentException("Unexpected place " + to.name() + " to move a card to.");
+	  }
+	  
+	  return card;
 	}
 	
 	public Cards move(int numCards) {

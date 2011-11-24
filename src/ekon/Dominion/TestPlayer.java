@@ -50,12 +50,12 @@ public class TestPlayer extends Player {
   }
   
   public void verify() {
-	Stack<Card> deckStack = new Stack<Card>();
-	deckStack.addAll(expectedDeck.asList());
-	
 	// TODO(ekon): Don't care about order. May want to though.
 	assertEquals(expectedHand, hand().availableCards());
-	assertTrue(deckStack.containsAll(deck())); // Don't care about order.
+	
+	for (Card card : deck()) {
+	  assertTrue(expectedDeck.contains(card)); // Don't care about order of deck.
+	}
 	assertEquals(expectedDiscard, discard());
 	
 	assertEquals(expectedTp, tp());
@@ -71,8 +71,15 @@ public class TestPlayer extends Player {
 	private TurnProperties expectedTp, expectedNextTp;
 	
 	public TestPlayer build(String name) {
-	  if (expectedTp == null) { expectedTp = new TurnProperties(); }
-	  if (nextTp == null) { nextTp = new TurnProperties(); }
+	  if ((tp == null) && (expectedTp == null)) {
+		tp = new TurnProperties();
+		expectedTp = new TurnProperties();
+	  }
+	  
+	  if ((nextTp == null) && expectedNextTp == null) {
+		nextTp = new TurnProperties();
+		expectedNextTp = new TurnProperties();
+	  }
 	  
 	  return new TestPlayer(name, handCards, deckCards, discardCards, tp, nextTp,
 		  expectedHand, expectedDeck, expectedDiscard, expectedTp, expectedNextTp);

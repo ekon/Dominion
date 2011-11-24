@@ -134,7 +134,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(	new Cards(CHAPEL, COPPER),
 						new Cards(COPPER))
 		    .setDiscard(discard,discard)
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -148,7 +148,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(	new Cards(CHAPEL, COPPER, ESTATE, COPPER),
 					 	new Cards(ESTATE, COPPER))
 		    .setDiscard(discard,discard)
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -162,7 +162,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(new Cards(CHAPEL, COPPER, ESTATE, COPPER, SILVER),
 					 new Cards(ESTATE, COPPER))
 		    .setDiscard(discard,discard)
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -176,7 +176,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(new Cards(CHAPEL, COPPER, ESTATE),
 					 new Cards())
 		    .setDiscard(discard,discard)
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -190,7 +190,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(new Cards(CHAPEL, COPPER, ESTATE, COPPER),
 					 new Cards(COPPER, COPPER))
 		    .setDiscard(discard,discard)
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -204,7 +204,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(new Cards(CHAPEL, COPPER, ESTATE, COPPER),
 					 new Cards(COPPER))
 		    .setDiscard(discard,discard)
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -224,7 +224,7 @@ public class CardPlayLogicTest extends TestCase {
 		.setHand(new Cards(MOAT, COPPER),
 				 new Cards(COPPER))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -246,7 +246,7 @@ public class CardPlayLogicTest extends TestCase {
 					 	new Cards())
 		    .setDiscard(new Cards(),
 		    			new Cards(COPPER, ESTATE, COPPER))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -258,7 +258,7 @@ public class CardPlayLogicTest extends TestCase {
 					 	new Cards(COPPER, ESTATE, COPPER))
 		    .setDiscard(new Cards(PROVINCE),
 		    			new Cards(PROVINCE))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -270,7 +270,7 @@ public class CardPlayLogicTest extends TestCase {
 						new Cards())
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, COPPER, ESTATE, COPPER))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -291,7 +291,7 @@ public class CardPlayLogicTest extends TestCase {
 		.setHand(new Cards(VILLAGE, COPPER),
 				 new Cards(COPPER))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -312,7 +312,7 @@ public class CardPlayLogicTest extends TestCase {
 		.setHand(new Cards(WOODCUTTER, COPPER),
 				 new Cards(COPPER))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -337,7 +337,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(hand, expectedHand)
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, BEAUROCRAT))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -348,7 +348,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(hand, expectedHand)
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, BEAUROCRAT))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -359,7 +359,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(hand, expectedHand)
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, BEAUROCRAT))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -377,7 +377,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(hand, expectedHand)
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, BEAUROCRAT))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .setTp(tp, expectedTp)
@@ -400,7 +400,7 @@ public class CardPlayLogicTest extends TestCase {
 		player = new PlayerBuilder()
 			.setHand(	new Cards(BEAUROCRAT, COPPER),
 						new Cards(COPPER))
-			.setDiscard(discard, discard)
+			.setDiscard(discard)
 			.setDeck(	new Cards(GOLD),
 						new Cards(GOLD, SILVER))
 		    .setTp(tp, expectedTp)
@@ -411,7 +411,7 @@ public class CardPlayLogicTest extends TestCase {
 		opponents[0] = new PlayerBuilder()
 			.setHand(	new Cards(COPPER),
 						new Cards(COPPER))
-			.setDiscard(discard, discard)
+			.setDiscard(discard)
 			.setDeck(	new Cards(MILITIA),
 						new Cards(MILITIA))
 			.setTp(opponentTp, opponentExpectedTp)
@@ -422,7 +422,7 @@ public class CardPlayLogicTest extends TestCase {
 		opponents[1] = new PlayerBuilder()
 			.setHand(	new Cards(COPPER, ESTATE),
 						new Cards(COPPER))
-			.setDiscard(discard, discard)
+			.setDiscard(discard)
 			.setDeck(	new Cards(CURSE),
 						new Cards(CURSE, ESTATE))
 			.setTp(opponentTp, opponentExpectedTp)
@@ -433,7 +433,7 @@ public class CardPlayLogicTest extends TestCase {
 		opponents[2] = new PlayerBuilder()
 			.setHand(	new Cards(MILITIA, ESTATE, DUCHY),
 						new Cards(MILITIA, DUCHY ))
-			.setDiscard(discard, discard)
+			.setDiscard(discard)
 			.setDeck(	new Cards(CHAPEL),
 						new Cards(CHAPEL, ESTATE))
 			.setTp(opponentTp, opponentExpectedTp)
@@ -445,7 +445,7 @@ public class CardPlayLogicTest extends TestCase {
 		opponents[3] = new PlayerBuilder()
 			.setHand(	new Cards(COPPER, MOAT), // TOOD(ekon): may want to add a more interesting reaction.
 						new Cards(COPPER, MOAT))
-			.setDiscard(discard, discard)
+			.setDiscard(discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS))
 			.setTp(opponentTp, opponentExpectedTp)
@@ -457,7 +457,7 @@ public class CardPlayLogicTest extends TestCase {
 		opponents[4] = new PlayerBuilder()
 			.setHand(	new Cards(COPPER, ESTATE, MOAT),
 						new Cards(COPPER, ESTATE, MOAT))
-			.setDiscard(discard, discard)
+			.setDiscard(discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS))
 			.setTp(opponentTp, opponentExpectedTp)
@@ -469,7 +469,7 @@ public class CardPlayLogicTest extends TestCase {
 		opponents[5] = new PlayerBuilder()
 			.setHand(	new Cards(COPPER, ESTATE, MOAT),
 						new Cards(COPPER, MOAT))
-			.setDiscard(discard, discard)
+			.setDiscard(discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS, ESTATE))
 			.setTp(opponentTp, opponentExpectedTp)
@@ -498,7 +498,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(hand, expectedHand)
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, FESTIVAL))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -509,7 +509,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(hand, expectedHand)
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, FESTIVAL))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -520,7 +520,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(hand, expectedHand)
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, FESTIVAL))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -538,7 +538,7 @@ public class CardPlayLogicTest extends TestCase {
 			.setHand(hand, expectedHand)
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, FESTIVAL))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
@@ -565,8 +565,8 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(new Cards(MILITIA, DUCHY),
 				 new Cards(DUCHY))
-	    .setDiscard(discard, discard)
-	    .setDeck(deck, deck)
+	    .setDiscard(discard)
+	    .setDeck(deck)
 		.setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -575,8 +575,8 @@ public class CardPlayLogicTest extends TestCase {
 	  opponents[0] = new PlayerBuilder()
 	  	.setHand(new Cards(MOAT, DUCHY),
 			 	 new Cards(MOAT, DUCHY))
-		.setDiscard(discard, discard)
-		.setDeck(deck, deck)
+		.setDiscard(discard)
+		.setDeck(deck)
 		.setTp(opponentTp, opponentExpectedTp)
 		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 		.build("P2");
@@ -588,7 +588,7 @@ public class CardPlayLogicTest extends TestCase {
 			 	 new Cards(GOLD, LABORATORY, COPPER))
 		.setDiscard(new Cards(ESTATE),
 					new Cards(ESTATE, ESTATE, MOAT))
-		.setDeck(deck, deck)
+		.setDeck(deck)
 		.setTp(opponentTp, opponentExpectedTp)
 		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 		.build("P3");
@@ -600,7 +600,7 @@ public class CardPlayLogicTest extends TestCase {
 			 	 new Cards(GOLD, LABORATORY, COPPER))
 		.setDiscard(new Cards(ESTATE),
 					new Cards(ESTATE, DUCHY, ESTATE))
-		.setDeck(deck, deck)
+		.setDeck(deck)
 		.setTp(opponentTp, opponentExpectedTp)
 		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 		.build("P4");
@@ -620,8 +620,8 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(new Cards(MONEYLANDER, MILITIA, COPPER, COPPER),
 				 new Cards(MILITIA, COPPER))
-	    .setDiscard(discard, discard)
-	    .setDeck(deck, deck)
+	    .setDiscard(discard)
+	    .setDeck(deck)
 		.setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -635,8 +635,8 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(new Cards(MONEYLANDER, MILITIA),
 				 new Cards(MILITIA))
-	    .setDiscard(discard, discard)
-	    .setDeck(deck, deck)
+	    .setDiscard(discard)
+	    .setDeck(deck)
 		.setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -693,7 +693,7 @@ public class CardPlayLogicTest extends TestCase {
 		.setHand(new Cards(SMITHY, COPPER),
 				 new Cards(COPPER))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -873,7 +873,7 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(	new Cards(THIEF, ESTATE),
 					new Cards(ESTATE))
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setDiscard(new Cards(ESTATE),
 	    			new Cards(ESTATE, GOLD, SILVER))
 		.setTp(tp, expectedTp)
@@ -897,11 +897,9 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(	new Cards(THRONE_ROOM, ESTATE),
 					new Cards(ESTATE))
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  runSimple("");
 	  
@@ -909,11 +907,9 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(	new Cards(THRONE_ROOM, ESTATE, WORKSHOP),
 					new Cards(ESTATE))
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER, SILVER, CHAPEL))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  runSimple("SILVER\nCHAPEL");
 	  
@@ -921,11 +917,9 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(	new Cards(THRONE_ROOM, ESTATE, WORKSHOP, MILITIA),
 					new Cards(ESTATE, MILITIA))
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER, SILVER, CHAPEL))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  runSimple("WORKSHOP\nSILVER\nCHAPEL");
 	  
@@ -939,12 +933,15 @@ public class CardPlayLogicTest extends TestCase {
 	  trash = new Trash(COLONY);
 	  expectedTrash = trash;
 	  expectedTp.addCards(4);
+	  expectedTp.addBuys(1);
 	  opponentExpectedTp.addCards(1);
 	  cardToPlay = COUNCIL_ROOM;
 
 	  player = new PlayerBuilder()
+	  	// The player doesn't actually gain 4 cards here, but rather later.
+	  // TODO(ekon): is this the right type of logic? Shouldn't we acknowledge card pick ups right away?
 		.setHand(	new Cards(MILITIA, COUNCIL_ROOM),
-					new Cards(MILITIA, ESTATE, GOLD, SILVER, ESTATE))
+					new Cards(MILITIA))
 	    .setDeck(new Cards(ESTATE, GOLD, SILVER, ESTATE),
 	    		 new Cards())
 	    .setDiscard(discard)
@@ -969,7 +966,7 @@ public class CardPlayLogicTest extends TestCase {
 		.setTp(opponentTp, opponentExpectedTp)
 	    .build("P3");
 	  
-	  run();
+	  run("");
 	}
 	
 	@Test
@@ -987,7 +984,7 @@ public class CardPlayLogicTest extends TestCase {
 		.setHand(new Cards(FESTIVAL, COPPER),
 				 new Cards(COPPER))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -1008,7 +1005,7 @@ public class CardPlayLogicTest extends TestCase {
 		.setHand(new Cards(LABORATORY, COPPER),
 				 new Cards(COPPER))
 	    .setDiscard(discard,discard)
-	    .setDeck(deck, deck)
+	    .setDeck(deck)
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
@@ -1021,7 +1018,7 @@ public class CardPlayLogicTest extends TestCase {
 						new Cards())
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, MOAT))
-		    .setDeck(deck, deck)
+		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
