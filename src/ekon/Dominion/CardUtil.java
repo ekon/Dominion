@@ -55,6 +55,7 @@ public class CardUtil {
 			case CHAPEL: playChapel(player); break;
 			case MOAT: break;
 			case CHANCELLOR: playChancellor(player); break;
+			case VILLAGE: break;
 			case WORKSHOP: playWorkshop(player, board); break;
 			case BEAUROCRAT: playBeaurocrat(player, board); break;
 			case FEAST: playFeast(card, player, board); break;

@@ -34,8 +34,8 @@ public class CardPlayLogicTest extends TestCase {
 		// This never changes for a CELLAR, so initializing for all tests.
 		trash = new Trash(CHANCELLOR);
 		expectedTrash = trash;
-		cardToPlay = CELLAR;
 		expectedTp.addActions(1);
+		cardToPlay = CELLAR;
 
 		// Verify discarding one card.
 		player = new PlayerBuilder()
@@ -234,6 +234,7 @@ public class CardPlayLogicTest extends TestCase {
 		Cards deck = new Cards(PROVINCE, DUCHY);
 		trash = new Trash( COLONY);
 		expectedTrash = trash;
+		expectedTp.addCoins(2);
 		cardToPlay = CHANCELLOR;
 		
 		// YES		
@@ -271,6 +272,27 @@ public class CardPlayLogicTest extends TestCase {
 			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("INVALID\nYES");
+	}
+	
+	@Test
+	public void testVillage() {
+	  Cards deck = new Cards(COLONY);
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addCards(1);
+	  expectedTp.addActions(2);
+	  cardToPlay = VILLAGE;	 
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(VILLAGE, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard,discard)
+	    .setDeck(deck, deck)
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  runSimple();
 	}
 	
 	@Test
