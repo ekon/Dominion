@@ -50,26 +50,27 @@ public class CardUtil {
 			actions.victoryTockens());
 		
 		// For cards that have a description with other actions to follow, do them.
-		switch(card) {
-			case CELLAR: playCellar(player); break;
-			case CHAPEL: playChapel(player); break;
-			case MOAT: break;
-			case CHANCELLOR: playChancellor(player); break;
-			case VILLAGE: break;
-			case WORKSHOP: playWorkshop(player, board); break;
-			case BEAUROCRAT: playBeaurocrat(player, board); break;
-			case FEAST: playFeast(card, player, board); break;
-			case MILITIA: playMilitia(player); break;
-			case MONEYLANDER: playMoneylander(player, board); break;
-			case REMODEL: playRemodel(player, board); break;
-			case SPY: playSpy(player); break;
-			case THIEF: playThief(player, board); break;
-			case THRONE_ROOM: playThroneRoom(player, board); break;
-			case COUNCIL_ROOM: playCouncilRoom(player);
-			case LIBRARY: playLibrary(player);
-			case MINE: playMine(player);
-			default:
-				throw new GameException(GameException.Type.CODE_ISSUE, "Card " + card.name() + " doesn't have playing instructions.");
+		if (!card.description().equals("")) {
+    		switch(card) {
+    			case CELLAR: playCellar(player); break;
+    			case CHAPEL: playChapel(player); break;
+    			case MOAT: break;
+    			case CHANCELLOR: playChancellor(player); break;
+    			case WORKSHOP: playWorkshop(player, board); break;
+    			case BEAUROCRAT: playBeaurocrat(player, board); break;
+    			case FEAST: playFeast(card, player, board); break;
+    			case MILITIA: playMilitia(player); break;
+    			case MONEYLANDER: playMoneylander(player, board); break;
+    			case REMODEL: playRemodel(player, board); break;
+    			case SPY: playSpy(player); break;
+    			case THIEF: playThief(player, board); break;
+    			case THRONE_ROOM: playThroneRoom(player, board); break;
+    			case COUNCIL_ROOM: playCouncilRoom(player);
+    			case LIBRARY: playLibrary(player);
+    			case MINE: playMine(player);
+    			default:
+    				throw new GameException(GameException.Type.CODE_ISSUE, "Card " + card.name() + " doesn't have playing instructions.");
+    		}
 		}
 	}
 

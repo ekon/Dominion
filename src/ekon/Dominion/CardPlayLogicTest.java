@@ -296,6 +296,70 @@ public class CardPlayLogicTest extends TestCase {
 	}
 	
 	@Test
+	public void testWoodcutter() {
+	  Cards deck = new Cards(COLONY);
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addBuys(1);
+	  expectedTp.addCoins(2);
+	  cardToPlay = WOODCUTTER;	 
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(WOODCUTTER, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard,discard)
+	    .setDeck(deck, deck)
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  runSimple();
+	}
+	
+	@Test
+	public void testFestival() {
+	  Cards deck = new Cards(COLONY);
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addActions(2);
+	  expectedTp.addBuys(1);
+	  expectedTp.addCoins(2);
+	  cardToPlay = FESTIVAL;	 
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(FESTIVAL, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard,discard)
+	    .setDeck(deck, deck)
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  runSimple();
+	}
+	
+	@Test
+	public void testLaboratory() {
+	  Cards deck = new Cards(COLONY);
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addCards(2);
+	  expectedTp.addActions(1);
+	  cardToPlay = LABORATORY;	 
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(LABORATORY, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard,discard)
+	    .setDeck(deck, deck)
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  runSimple();
+	}
+	
+	@Test
 	public void testWorkshop() {
 		// Gain a card costing up to 4.
 		Cards hand = new Cards(WORKSHOP, COPPER, ESTATE);
