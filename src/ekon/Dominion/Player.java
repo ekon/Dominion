@@ -1,7 +1,6 @@
 package ekon.dominion;
 
-import static ekon.dominion.Card.COPPER;
-import static ekon.dominion.Card.ESTATE;
+import static ekon.dominion.Card.*;
 import static ekon.dominion.Card.CardType.*;
 import static ekon.dominion.Player.CardPlace.*;
 

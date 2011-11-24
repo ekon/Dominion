@@ -49,6 +49,7 @@ public class CardUtil {
 		player.tp().add(actions.cards(), actions.actions(), actions.coins(), actions.buys(),
 			actions.victoryTockens());
 		
+		// For cards that have a description with other actions to follow, do them.
 		switch(card) {
 			case CELLAR: playCellar(player); break;
 			case CHAPEL: playChapel(player); break;
@@ -63,6 +64,9 @@ public class CardUtil {
 			case SPY: playSpy(player); break;
 			case THIEF: playThief(player, board); break;
 			case THRONE_ROOM: playThroneRoom(player, board); break;
+			case COUNCIL_ROOM: playCouncilRoom(player);
+			case LIBRARY: playLibrary(player);
+			case MINE: playMine(player);
 			default:
 				throw new GameException(GameException.Type.CODE_ISSUE, "Card " + card.name() + " doesn't have playing instructions.");
 		}
@@ -232,5 +236,22 @@ public class CardUtil {
 	  
 	  playCard(cardToPlay, player, board);
 	  playCard(cardToPlay, player, board);
+	}
+	
+	private static void playCouncilRoom(Player player) {
+	  // Player picks up 4, which was already taken care of. Opponents pick up 1.
+	  
+	  for (Player opponent : player.opponents()) {
+		opponent.mover().from(DECK).to(HAND).move();
+	  }
+	}
+	
+	private static void playLibrary(Player player) {
+	  
+	  
+	}
+	
+	private static void playMine(Player player) {
+	  
 	}
 }
