@@ -1050,8 +1050,12 @@ public class CardPlayLogicTest extends TestCase {
 
 	  trash = new Trash(ESTATE);
 	  expectedTrash = new Trash(ESTATE, COPPER);
-	  runSimple("SILVER");
-	  // TODO(ekon): verify card on board was removed.
+	  opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
+	  setUp("SILVER");
+	  int initialCopperCountOnBoard = board.getCardCount(SILVER);
+	  CardUtil.playCard(MINE, player, board);
+	  verify();
+	  assertEquals(initialCopperCountOnBoard - 1, board.getCardCount(SILVER));
 	  
 	  // No treasures to trash.
 	  player = new PlayerBuilder()
@@ -1077,11 +1081,12 @@ public class CardPlayLogicTest extends TestCase {
 	  expectedTrash = new Trash(ESTATE, COPPER); // Card from board got trashed.
 	  opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
 	  setUp("COPPER");
+	  initialCopperCountOnBoard = board.getCardCount(COPPER);
 	  board.buy(SILVER, board.getCardCount(SILVER));
 	  assertEquals(0, board.getCardCount(SILVER));
 	  CardUtil.playCard(MINE, player, board);
 	  verify();
-	  // TODO(ekon): verify card on board was removed.
+	  assertEquals(initialCopperCountOnBoard - 1, board.getCardCount(COPPER));
 	  
 	  // No cards available in board to get.
 	  player = new PlayerBuilder()
