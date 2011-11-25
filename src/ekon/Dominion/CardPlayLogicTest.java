@@ -1127,6 +1127,7 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(new Cards(COPPER, SILVER),
 	    		 new Cards())
 	    .build("P1");
+	  runSimple();
 	  
 	  // Test no treasures in deck, reshuffle to get 1 more treasure (no others left).
 	  player = new PlayerBuilder()
@@ -1137,6 +1138,7 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(new Cards(COPPER),
 	    		 new Cards())
 	    .build("P1");
+	  runSimple();
 	  
 	  // Test no treasures in hand or deck.
 	  player = new PlayerBuilder()
@@ -1147,6 +1149,7 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(new Cards(COLONY),
 	    		 new Cards())
 	    .build("P1");
+	  runSimple();
 	}
 	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {

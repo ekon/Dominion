@@ -324,14 +324,17 @@ public class CardUtil {
 	  Cards treasure = new Cards();
 	  Cards cardsToDiscard = new Cards();
 	  
-	  Card cardToPickUp = player.mover().from(DECK).to(HAND).move();
-	  while((cardToPickUp != null) && (treasure.size() < 2)) {
+	  Card cardToPickUp = player.mover().from(DECK).move();
+	  while((cardToPickUp != null) && (treasure.size() < 2 )) {
 		if (cardToPickUp.types().contains(TREASURE)) {
 		  treasure.add(cardToPickUp);
 		} else {
 		  cardsToDiscard.add(cardToPickUp);
 		}
-		cardToPickUp = player.mover().from(DECK).to(HAND).move();
+		
+		if (treasure.size() < 2 ) {
+		  cardToPickUp = player.mover().from(DECK).move();
+		}
 	  }
 	  
 	  player.mover().to(HAND).move(treasure, true);
