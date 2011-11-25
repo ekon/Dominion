@@ -1,17 +1,16 @@
 package ekon.dominion;
 
-// @formatter:off
+import static ekon.dominion.Card.CURSE;
 import static ekon.dominion.Card.CardType.ACTION;
 import static ekon.dominion.Card.CardType.TREASURE;
 import static ekon.dominion.Card.CardType.VICTORY;
+import static ekon.dominion.Player.CardPlace.BOARD;
 import static ekon.dominion.Player.CardPlace.DECK;
 import static ekon.dominion.Player.CardPlace.DISCARD;
 import static ekon.dominion.Player.CardPlace.HAND;
-import static ekon.dominion.Player.CardPlace.BOARD;
 import static ekon.dominion.Player.CardPlace.TRASH;
 import ekon.dominion.board.Board;
 
-// @formatter:off
 public class CardUtil {
 	public static UIUtil uiUtil = UIUtil.getUIUtil();
 	
@@ -79,6 +78,8 @@ public class CardUtil {
     			case COUNCIL_ROOM: playCouncilRoom(player); break;
     			case LIBRARY: playLibrary(player); break;
     			case MINE: playMine(player, board); break;
+    			case WITCH: playWitch(player, board); break;
+    			case ADVENTURER: playAdventurer(player); break;
     			default:
     				throw new GameException(GameException.Type.CODE_ISSUE, "Card " + card.name() + " doesn't have playing instructions.");
     		}
@@ -264,6 +265,7 @@ public class CardUtil {
 	  
 	  // It's remotely possible that entire deck+hand+discard is less than 7 cards.
 	  
+	  
 	}
 	
 	private static void playMine(Player player, Board board) {
@@ -290,5 +292,21 @@ public class CardUtil {
 		
 		player.mover().from(HAND).to(TRASH).move(cardToTrash);
 		player.mover().from(BOARD).to(HAND).move(cardToGain);
+	}
+	
+	private static void playWitch(Player player, Board board) {
+		// Each opponent gains a curse.
+		for (Player opponent : player.opponents()) {
+			uiUtil.tellUser(opponent.name() + "'s been attacked with WITCH.");
+			// If not playing reaction, then getting attacked.
+			if(!uiUtil.revealReaction(opponent)) {
+			  opponent.mover().from(BOARD).to(DISCARD).move(CURSE, true);
+			}
+		}
+	}
+	
+	private static void playAdventurer(Player player) {
+	  // Reveal cards from  your deck until you reveal 2 Treasure cards.
+	  // Put those treasure cards into your hand and discard the other revealed cards.
 	}
 }

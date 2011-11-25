@@ -1,8 +1,10 @@
 package ekon.dominion;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
 import java.util.Stack;
 
-import static junit.framework.Assert.*;
 import ekon.dominion.board.Board;
 
 public class TestPlayer extends Player {
@@ -23,6 +25,9 @@ public class TestPlayer extends Player {
   private TestPlayer(String name, Cards handCards, Cards deckCards, Cards discardCards, TurnProperties tp, TurnProperties nextTp,
 	  Cards expectedHand, Cards expectedDeck, Cards expectedDiscard, TurnProperties expectedTp, TurnProperties expectedNextTp) {
 	super(name);
+	
+	new SecurityUtil().verifyCallingClassIsTest();
+	
 	this.handCards = handCards;
 	this.deckCards = deckCards;
 	this.discardCards = discardCards;
