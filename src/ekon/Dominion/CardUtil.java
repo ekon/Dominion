@@ -264,18 +264,21 @@ public class CardUtil {
 	  // discard the set aside cards after you finish drawing.
 	  
 	  // It's remotely possible that entire deck+hand+discard is less than 7 cards.
-	  Card card = player.mover().from(DECK).to(HAND).move();
+	  Card card = player.mover().from(DECK).move();
 	  while((card != null) && (player.hand().cards().size() < 7)) {
 		boolean toPickUp = true;
 		if (card.types().contains(ACTION)) {
 		  toPickUp = uiUtil.getBooleanFromUser("What do you want to do with " + card + "? Pick up or Discard?", "Pick Up", "Discard");
 		}
 		
-		if (toPickUp) {
-		  player.mover().to(HAND).move(card);
-		} else {
-		  player.mover().to(DISCARD).move(card);
-		} 
+		if (player.hand().cards().size() < 7) {
+		  if (toPickUp) {
+			player.mover().to(HAND).move(card);
+		  } else {
+			player.mover().to(DISCARD).move(card);
+		  }
+		  card = player.mover().from(DECK).move();
+		}
 	  }
 	}
 	
