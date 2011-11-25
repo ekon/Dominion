@@ -1047,6 +1047,38 @@ public class CardPlayLogicTest extends TestCase {
 	    .build("P1");
 	  runSimple();
 	  
+	  // Two victory cards.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(PLATINUM, ESTATE, ESTATE, ESTATE, LIBRARY),
+				 new Cards(PLATINUM, ESTATE, ESTATE, ESTATE, DUCHY, DUCHY))
+	    .setDiscard(new Cards(PROVINCE),
+	    			new Cards(PROVINCE))
+	    .setDeck(new Cards(DUCHY, DUCHY),
+	    		 new Cards())
+	    .build("P1");
+	  runSimple();
+	  
+	  // There's an action card, that the player chooses to discard.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(PLATINUM, ESTATE, ESTATE, ESTATE, LIBRARY),
+				 new Cards(PLATINUM, ESTATE, ESTATE, ESTATE, DUCHY, DUCHY))
+	    .setDiscard(new Cards(PROVINCE),
+	    			new Cards(PROVINCE, MILITIA))
+	    .setDeck(new Cards(DUCHY, DUCHY, MILITIA),
+	    		 new Cards())
+	    .build("P1");
+	  runSimple("Discard\n");
+	  
+	  // There's an action card that the player chooses to pick up.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(PLATINUM, ESTATE, ESTATE, ESTATE, LIBRARY),
+				 new Cards(PLATINUM, ESTATE, ESTATE, ESTATE, MILITIA, DUCHY))
+	    .setDiscard(new Cards(PROVINCE),
+	    			new Cards(PROVINCE))
+	    .setDeck(new Cards(MILITIA, DUCHY),
+	    		 new Cards())
+	    .build("P1");
+	  runSimple("Pick up\n");
 	}
 	
 	@Test

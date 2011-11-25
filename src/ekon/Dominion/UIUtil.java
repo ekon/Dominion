@@ -53,9 +53,11 @@ public class UIUtil {
 	  String availableOptions = "Available options are: " + posOption + "/" + negOption;
 	  String userInput = getUserInput(message, availableOptions);
 	  try {
-		if (userInput.equals(posOption)) {
+		if (userInput.equals(posOption.toUpperCase())) {
 		  return true;
-		} else if (userInput.equals(negOption)) { return false; }
+		} else if (userInput.equals(negOption.toUpperCase())) {
+		  return false;
+		}
 	  } catch (IllegalArgumentException e) {
 		userInput = getUserInput(userInput + " is not an available option.", availableOptions);
 	  }
