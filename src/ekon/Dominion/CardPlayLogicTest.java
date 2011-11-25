@@ -227,9 +227,27 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(new Cards(ESTATE, DUKE),
 	    		 new Cards())
 	    .setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  runSimple();
+	}
+	
+	@Test
+	public void testCourtyard() {
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addCards(3);
+	  cardToPlay = COURTYARD;
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(COPPER, SILVER, COURTYARD),
+				 new Cards(COPPER, ESTATE, DUKE, PROVINCE))
+	    .setDiscard(discard,discard)
+	    .setDeck(new Cards(ESTATE, DUKE, PROVINCE),
+	    		 new Cards(SILVER))
+	    .setTp(tp, expectedTp)
+	    .build("P1");
+	  runSimple("SILVER");
 	}
 	
 	@Test
