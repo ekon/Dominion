@@ -1114,6 +1114,39 @@ public class CardPlayLogicTest extends TestCase {
 	public void testAdventurer() {
 	  // Reveal cards from  your deck until you reveal 2 Treasure cards.
 	  // Put those treasure cards into your hand and discard the other revealed cards.
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  cardToPlay = ADVENTURER;
+	  
+	  // Test first 2 cards are treasure.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(ADVENTURER, PLATINUM),
+				 new Cards(PLATINUM, COPPER, SILVER))
+	    .setDiscard(new Cards(PROVINCE),
+	    			new Cards(PROVINCE))
+	    .setDeck(new Cards(COPPER, SILVER),
+	    		 new Cards())
+	    .build("P1");
+	  
+	  // Test no treasures in deck, reshuffle to get 1 more treasure (no others left).
+	  player = new PlayerBuilder()
+		.setHand(new Cards(ADVENTURER, PLATINUM),
+				 new Cards(PLATINUM, COPPER, SILVER))
+	    .setDiscard(new Cards(SILVER),
+	    			new Cards())
+	    .setDeck(new Cards(COPPER),
+	    		 new Cards())
+	    .build("P1");
+	  
+	  // Test no treasures in hand or deck.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(ADVENTURER, PLATINUM),
+				 new Cards(PLATINUM))
+	    .setDiscard(new Cards(PROVINCE),
+	    			new Cards(PROVINCE, COLONY))
+	    .setDeck(new Cards(COLONY),
+	    		 new Cards())
+	    .build("P1");
 	}
 	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {

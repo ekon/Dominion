@@ -87,32 +87,32 @@ public class CardUtil {
 	}
 
 	private static void playCellar(Player player) {
-		Cards cards = uiUtil.getCardsFromUser("Card(s) to discard? or DONE?", player.hand().availableCards(), true);
-		if (cards != null) {
-			player.mover().from(HAND).to(DISCARD).move(cards);
-			player.mover().from(DECK).to(HAND).move(cards.size());
-			uiUtil.tellUser("	" + player.name() + "'s new hand: " + player.hand().toString());
-		}
+	  Cards cards = uiUtil.getCardsFromUser("Card(s) to discard? or DONE?", player.hand().availableCards(), true);
+	  if (cards != null) {
+		player.mover().from(HAND).to(DISCARD).move(cards);
+		player.mover().from(DECK).to(HAND).move(cards.size());
+		uiUtil.tellUser("	" + player.name() + "'s new hand: " + player.hand().toString());
+	  }
 	}
 	
 	private static void playChapel(Player player) {
-		Cards cards = uiUtil.getCardsFromUser("Card(s) to trash? or DONE?", player.hand().availableCards(), true);
-		if (cards != null) {
-			player.mover().from(HAND).to(TRASH).move(cards);
-			uiUtil.tellUser("	" + player.name() + " trashed: " + cards.toString());
-		}
+	  Cards cards = uiUtil.getCardsFromUser("Card(s) to trash? or DONE?", player.hand().availableCards(), true);
+	  if (cards != null) {
+		player.mover().from(HAND).to(TRASH).move(cards);
+		uiUtil.tellUser("	" + player.name() + " trashed: " + cards.toString());
+	  }
 	}
 	
 	private static void playChancellor(Player player) {
-		boolean discardDeck = uiUtil.getBooleanFromUser("Discard deck? YES/NO?");
-		if (discardDeck == true) {
-			player.mover().from(HAND).to(DISCARD).move(player.hand().availableCards());
-		}
+	  boolean discardDeck = uiUtil.getBooleanFromUser("Discard deck? YES/NO?");
+	  if (discardDeck == true) {
+		player.mover().from(HAND).to(DISCARD).move(player.hand().availableCards());
+	  }
 	}
 	
 	private static void playWorkshop(Player player, Board board) {
-		Card cardToGain = uiUtil.getCardCostingUpTo(4, board.getAvailableCardCostingUpTo(4));
-		player.mover().to(DISCARD).move(cardToGain);
+	  Card cardToGain = uiUtil.getCardCostingUpTo(4, board.getAvailableCardCostingUpTo(4));
+	  player.mover().to(DISCARD).move(cardToGain);
 	}
 	
 	private static void playBeaurocrat(Player player, Board board) {

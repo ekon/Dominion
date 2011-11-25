@@ -1,10 +1,8 @@
 package ekon.dominion;
 
-// @formatter:off
 import static ekon.dominion.Card.CardType.*;
 import static ekon.dominion.Card.SetType.*;
 
-// @formatter:on
 import java.util.Arrays;
 import java.util.List;
 
