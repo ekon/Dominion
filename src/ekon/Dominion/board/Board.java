@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ekon.dominion.Card;
+import ekon.dominion.Card.CardType;
 import ekon.dominion.Cards;
 import ekon.dominion.SecurityUtil;
 import ekon.dominion.UIUtil;
@@ -58,22 +59,20 @@ public class Board {
 	return decks.get(card).currentCount();
   }
   
+  public void putBack(Card card) {
+	decks.get(card).put(1);
+  }
+  
+  public void putBack(Card card, int numToPutBack) {
+	decks.get(card).put(numToPutBack);
+  }
+  
   public Trash trash() {
 	return trash;
   }
   
   public void trash(Card card) {
 	trash.add(card);
-  }
-  
-  public void trash(Cards cards) {
-	trash.add(cards);
-  }
-  
-  public void buy(Cards cards) {
-	for (Card card : cards) {
-	  buy(card);
-	}
   }
   
   public void buy(Card card) {
@@ -98,6 +97,16 @@ public class Board {
 	Cards availableCards = new Cards();
 	for (Card card : decks.keySet()) {
 	  if ((decks.get(card).currentCount() > 0) && (card.cost() <= cost)) {
+		availableCards.add(card);
+	  }
+	}
+	return availableCards;
+  }
+  
+  public Cards getAvailableCardCostingUpTo(int cost, CardType type) {
+	Cards availableCards = new Cards();
+	for (Card card : decks.keySet()) {
+	  if ((decks.get(card).currentCount() > 0) && (card.cost() <= cost) && card.types().contains(type)) {
 		availableCards.add(card);
 	  }
 	}

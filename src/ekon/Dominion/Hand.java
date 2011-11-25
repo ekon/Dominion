@@ -34,6 +34,7 @@ public class Hand {
 		return cards.contains(card);
 	}
 	
+	/** Be careful with using this. Make sure that it's on availableCards in hand, if need be, rather than just on hand itself. */
 	public Cards getCards(CardType type) {
 		return cards.getCards(type);
 	}

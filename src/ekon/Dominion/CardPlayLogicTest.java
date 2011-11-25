@@ -366,9 +366,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .build("P1");
 		opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
 		setUp("FEAST\nBEAUROCRAT");
-		for (int i=0; i<10; i++) {
-			board.buy(FEAST);
-		}
+		board.buy(FEAST, 10); // Deplete the deck.
 		assertEquals(0, board.getCardCount(FEAST));
 		CardUtil.playCard(WORKSHOP, player, board);
 		verify();
@@ -527,9 +525,7 @@ public class CardPlayLogicTest extends TestCase {
 		    .build("P1");
 		opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
 		setUp("COUNCIL ROOM\nFESTIVAL");
-		for (int i=0; i<10; i++) {
-			board.buy(COUNCIL_ROOM);
-		}
+		board.buy(COUNCIL_ROOM, 10); // Deplete the deck.
 		assertEquals(0, board.getCardCount(COUNCIL_ROOM));
 		CardUtil.playCard(FEAST, player, board);
 		verify();
@@ -673,9 +669,7 @@ public class CardPlayLogicTest extends TestCase {
 		player = recreateRemodelPlayer(deck);
 		opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
 		setUp("COPPER\nCELLAR\nMOAT");
-		for (int i=0; i<10; i++) {
-			board.buy(CELLAR);
-		}
+		board.buy(CELLAR, 10); // Deplete the deck.
 		assertEquals(0, board.getCardCount(CELLAR));
 		CardUtil.playCard(REMODEL, player, board);
 		verify();
@@ -981,7 +975,7 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(new Cards(FESTIVAL, COPPER),
 				 new Cards(COPPER))
-	    .setDiscard(discard,discard)
+	    .setDiscard(discard)
 	    .setDeck(deck)
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
@@ -1001,13 +995,69 @@ public class CardPlayLogicTest extends TestCase {
 	  player = new PlayerBuilder()
 		.setHand(new Cards(LABORATORY, COPPER),
 				 new Cards(COPPER, ESTATE, DUKE))
-	    .setDiscard(discard,discard)
+	    .setDiscard(discard)
 	    .setDeck(new Cards(ESTATE, DUKE),
 	    		 new Cards())
 	    .setTp(tp, expectedTp)
 		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  runSimple();
+	}
+
+	
+	@Test
+	public void testMarket() {
+	  Cards discard = new Cards(MILITIA);
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  expectedTp.addCards(1);
+	  expectedTp.addActions(1);
+	  expectedTp.addCoins(1);
+	  expectedTp.addBuys(1);
+	  cardToPlay = MARKET;	 
+	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(MARKET, COPPER),
+				 new Cards(COPPER, DUKE))
+	    .setDiscard(discard)
+	    .setDeck(new Cards(DUKE),
+	    		 new Cards())
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
+	  runSimple();
+	}
+	
+	@Test
+	public void testLibrary() {
+	  
+	}
+	
+	@Test
+	public void testMine() {
+	  // Trash treasure, get another costing up to 3 more.
+	  Cards discard = new Cards(MILITIA);
+	  Cards deck = new Cards(DUKE);
+	  cardToPlay = MINE;
+	  
+	  // Trash copper, gain silver. Board has Copper and Silver available to buy.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(MINE, COPPER),
+				 new Cards(SILVER))
+	    .setDiscard(discard)
+	    .setDeck(deck)
+	    .build("P1");
+
+	  trash = new Trash(ESTATE);
+	  expectedTrash = new Trash(ESTATE, COPPER);
+	  runSimple("SILVER");
+	  
+	  // No treasures to trash.
+	  
+	  // Only 1 option available on board.
+	  
+	  // No cards available in board to get.
+	  
 	}
 	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {

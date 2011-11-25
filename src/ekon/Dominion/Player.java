@@ -182,6 +182,7 @@ public class Player implements Comparable<Player> {
 	DECK,
 	DISCARD,
 	TRASH,
+	BOARD,
 	NO_MOVE;
   }
   
@@ -219,7 +220,8 @@ public class Player implements Comparable<Player> {
     	case HAND: 	  	hand.remove(card); break;
     	case DECK: 	  	throw new UnsupportedOperationException("Did you mean to use move() instead?");
     	case DISCARD: 	discard.remove(card); break;
-    	case TRASH:   	throw new UnsupportedOperationException("moving a card from trash is not yet implemented."); // TODO(ekon): fix this.
+    	case TRASH:   	throw new UnsupportedOperationException("Moving a card from trash is not yet implemented."); // TODO(ekon): fix this.
+    	case BOARD:		board.buy(card); break;
     	case NO_MOVE: 	break;
     	default: 	  	throw new IllegalArgumentException("Unexpected place " + from.name() + " to move a card from.");
 	  }
@@ -229,6 +231,7 @@ public class Player implements Comparable<Player> {
 		case DECK: 		deck.push(card); break;
 		case DISCARD: 	discard.add(card); break;
 		case TRASH: 	board.trash(card); break;
+		case BOARD:		board.putBack(card); break;
 		case NO_MOVE:	break;
   	  	default: 		throw new IllegalArgumentException("Unexpected place " + to.name() + " to move a card to.");
 	  }
@@ -269,6 +272,7 @@ public class Player implements Comparable<Player> {
 		case DECK: 		deck.push(card); break;
 		case DISCARD: 	discard.add(card); break;
 		case TRASH: 	board.trash(card); break;
+		case BOARD:		board.putBack(card);  break;
 		case NO_MOVE:	break;
   	  	default: 		throw new IllegalArgumentException("Unexpected place " + to.name() + " to move a card to.");
 	  }

@@ -1,9 +1,14 @@
 package ekon.dominion;
 
 // @formatter:off
-import static ekon.dominion.Player.CardPlace.*;
-import static ekon.dominion.Card.CardType.*;
-// @formatter:on
+import static ekon.dominion.Card.CardType.ACTION;
+import static ekon.dominion.Card.CardType.TREASURE;
+import static ekon.dominion.Card.CardType.VICTORY;
+import static ekon.dominion.Player.CardPlace.DECK;
+import static ekon.dominion.Player.CardPlace.DISCARD;
+import static ekon.dominion.Player.CardPlace.HAND;
+import static ekon.dominion.Player.CardPlace.BOARD;
+import static ekon.dominion.Player.CardPlace.TRASH;
 import ekon.dominion.board.Board;
 
 // @formatter:off
@@ -73,7 +78,7 @@ public class CardUtil {
     			case THRONE_ROOM: playThroneRoom(player, board); break;
     			case COUNCIL_ROOM: playCouncilRoom(player); break;
     			case LIBRARY: playLibrary(player); break;
-    			case MINE: playMine(player); break;
+    			case MINE: playMine(player, board); break;
     			default:
     				throw new GameException(GameException.Type.CODE_ISSUE, "Card " + card.name() + " doesn't have playing instructions.");
     		}
@@ -112,8 +117,7 @@ public class CardUtil {
 	private static void playBeaurocrat(Player player, Board board) {
 		// Gain a silver card, put on top of deck.
 		if (board.getCardCount(Card.SILVER) > 0) {
-			board.buy(Card.SILVER);
-			player.mover().to(DECK).move(Card.SILVER);
+			player.mover().from(BOARD).to(DECK).move(Card.SILVER);
 		}
 		
 		// Each opponent reveals victory and puts on top of deck, or reveals hand with no victory.
@@ -255,11 +259,36 @@ public class CardUtil {
 	}
 	
 	private static void playLibrary(Player player) {
+	  // Draw until you have 7 cards in hand. You may set aside any action cards drawn this way, as you draw them;
+	  // discard the set aside cards after you finish drawing.
 	  
+	  // It's remotely possible that entire deck+hand+discard is less than 7 cards.
 	  
 	}
 	
-	private static void playMine(Player player) {
+	private static void playMine(Player player, Board board) {
+	  // Trash a treasure card from your hand. Gain a treasure card costing up to 3 more; put it into your hand.
 	  
+	  Cards availableTreasuresInHand = player.hand().getCards(TREASURE);
+	  Card cardToTrash = null;
+	  if (availableTreasuresInHand.size() == 0) {
+		uiUtil.tellUser("You don't have any Treasures in your hand to trash.");
+		return;
+	  }
+	  else if (availableTreasuresInHand.size() == 1) {
+		cardToTrash = availableTreasuresInHand.get(0);
+	  } else {
+		cardToTrash = uiUtil.getCardFromUser("Which card would you like to trash?", availableTreasuresInHand);
+	  }
+		Cards availableTreasureToGet = board.getAvailableCardCostingUpTo(cardToTrash.cost() + 3, TREASURE);
+		if (availableTreasureToGet.size() == 0) {
+		  uiUtil.tellUser("There are no available cards to get from the board.");
+		  return;
+		}
+		
+		Card cardToGain = uiUtil.getCardFromUser("Which card would you like to replace it with?", availableTreasureToGet);
+		
+		player.mover().from(HAND).to(TRASH).move(cardToTrash);
+		player.mover().from(BOARD).to(HAND).move(cardToGain);
 	}
 }
