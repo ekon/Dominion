@@ -50,7 +50,6 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(new Cards(),
 						new Cards(COPPER))
 			.setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 			.build("P1");
 		runSimple("COPPER");
 		
@@ -63,7 +62,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(),
 		    			new Cards())
 		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("COPPER");
 		
@@ -76,7 +74,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(),
 		    			new Cards(COPPER, ESTATE))
 		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("COPPER,ESTATE");
 		
@@ -89,7 +86,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(PROVINCE),
 		    			new Cards(PROVINCE, COPPER, ESTATE, COPPER))
 		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("COPPER,ESTATE,COPPER");
 		
@@ -102,7 +98,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(PROVINCE),
 		    			new Cards(PROVINCE))
 		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("DONE");
 		
@@ -115,7 +110,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(PROVINCE),
 		    			new Cards(PROVINCE, COPPER, COPPER))
 		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("ESTATE,FEAST\nCOPPER,COPPER");
 	}
@@ -136,8 +130,6 @@ public class CardPlayLogicTest extends TestCase {
 						new Cards(COPPER))
 		    .setDiscard(discard,discard)
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("DONE");
 		
@@ -150,8 +142,6 @@ public class CardPlayLogicTest extends TestCase {
 					 	new Cards(ESTATE, COPPER))
 		    .setDiscard(discard,discard)
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("COPPER");
 		
@@ -164,8 +154,6 @@ public class CardPlayLogicTest extends TestCase {
 					 new Cards(ESTATE, COPPER))
 		    .setDiscard(discard,discard)
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("COPPER,SILVER");
 		
@@ -178,8 +166,6 @@ public class CardPlayLogicTest extends TestCase {
 					 new Cards())
 		    .setDiscard(discard,discard)
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("COPPER,ESTATE");
 		
@@ -192,8 +178,6 @@ public class CardPlayLogicTest extends TestCase {
 					 new Cards(COPPER, COPPER))
 		    .setDiscard(discard,discard)
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("COPPER,SILVER\nESTATE"); // this will only trash the estate.
 
@@ -206,8 +190,6 @@ public class CardPlayLogicTest extends TestCase {
 					 new Cards(COPPER))
 		    .setDiscard(discard,discard)
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("COPPER,SILVER\nCOPPER,ESTATE"); // this will only trash both copper and estate
 	}
@@ -233,6 +215,7 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testCourtyard() {
+	  // Put a card from your hand on top of your deck.
 	  Cards discard = new Cards(MILITIA);
 	  trash = new Trash(ESTATE);
 	  expectedTrash = trash;
@@ -267,7 +250,6 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards(COPPER, ESTATE, COPPER))
 		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("YES");
 		
@@ -279,7 +261,6 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards(PROVINCE))
 		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("NO");
 		
@@ -291,7 +272,6 @@ public class CardPlayLogicTest extends TestCase {
 		    			new Cards(MILITIA, COPPER, ESTATE, COPPER))
 		    .setDeck(deck)
 		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("INVALID\nYES");
 	}
@@ -312,7 +292,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(new Cards(COLONY),
 	    		 new Cards())
 	    .setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  runSimple();
 	}
@@ -333,7 +312,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDiscard(discard,discard)
 	    .setDeck(deck)
 	    .setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  runSimple();
 	}
@@ -357,8 +335,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, BEAUROCRAT))
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("BEAUROCRAT");		
 		
@@ -368,8 +344,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, BEAUROCRAT))
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("MILITIA\nBEAUROCRAT");
 		
@@ -379,8 +353,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, BEAUROCRAT))
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
 		setUp("FEAST\nBEAUROCRAT");
@@ -395,10 +367,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, BEAUROCRAT))
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("FESTIVAL\nBEAUROCRAT");
 	}
@@ -420,8 +388,6 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard)
 			.setDeck(	new Cards(GOLD),
 						new Cards(GOLD, SILVER))
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 			.build("P1");
 		
 		// No victory/reaction, does nothing.
@@ -431,8 +397,6 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard)
 			.setDeck(	new Cards(MILITIA),
 						new Cards(MILITIA))
-			.setTp(opponentTp, opponentExpectedTp)
-			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P2");
 		
 		// Victory, no reaction, puts victory on deck.
@@ -442,8 +406,6 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard)
 			.setDeck(	new Cards(CURSE),
 						new Cards(CURSE, ESTATE))
-			.setTp(opponentTp, opponentExpectedTp)
-			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P3");
 		
 		// Multiple victories, no reaction, puts a chosen one on deck. First input invalid.
@@ -453,8 +415,6 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard)
 			.setDeck(	new Cards(CHAPEL),
 						new Cards(CHAPEL, ESTATE))
-			.setTp(opponentTp, opponentExpectedTp)
-			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P4");
 		userInput.append("COPPER\nESTATE\n");
 		
@@ -465,8 +425,6 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS))
-			.setTp(opponentTp, opponentExpectedTp)
-			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P5");
 		userInput.append("YES\nCOPPER\nMOAT\n");
 		
@@ -477,8 +435,6 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS))
-			.setTp(opponentTp, opponentExpectedTp)
-			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P6");
 		userInput.append("MAYBE\nYES\nMOAT\n");
 		
@@ -489,8 +445,6 @@ public class CardPlayLogicTest extends TestCase {
 			.setDiscard(discard)
 			.setDeck(	new Cards(GARDENS),
 						new Cards(GARDENS, ESTATE))
-			.setTp(opponentTp, opponentExpectedTp)
-			.setNextTp(opponentNextTp, opponentExpectedNextTp)
 			.build("P7");
 		userInput.append("NO\n");
 
@@ -516,8 +470,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, FESTIVAL))
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("FESTIVAL");		
 		
@@ -527,8 +479,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, FESTIVAL))
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("MILITIA\nFESTIVAL");
 		
@@ -538,8 +488,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, FESTIVAL))
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
 		setUp("COUNCIL ROOM\nFESTIVAL");
@@ -554,8 +502,6 @@ public class CardPlayLogicTest extends TestCase {
 		    .setDiscard(new Cards(MILITIA),
 		    			new Cards(MILITIA, FESTIVAL))
 		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
 		    .build("P1");
 		runSimple("GOLD\nFESTIVAL");
 	}
@@ -583,7 +529,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDiscard(discard)
 	    .setDeck(deck)
 		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  
 	  // Opponent shows reaction, doesn't have to discard.
@@ -592,8 +537,6 @@ public class CardPlayLogicTest extends TestCase {
 			 	 new Cards(MOAT, DUCHY))
 		.setDiscard(discard)
 		.setDeck(deck)
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 		.build("P2");
 	  userInput.append("YES\n");
 	  
@@ -604,8 +547,6 @@ public class CardPlayLogicTest extends TestCase {
 		.setDiscard(new Cards(ESTATE),
 					new Cards(ESTATE, ESTATE, MOAT))
 		.setDeck(deck)
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 		.build("P3");
 	  userInput.append("NO\nESTATE,MOAT\n");
 	  
@@ -616,8 +557,6 @@ public class CardPlayLogicTest extends TestCase {
 		.setDiscard(new Cards(ESTATE),
 					new Cards(ESTATE, DUCHY, ESTATE))
 		.setDeck(deck)
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 		.build("P4");
 	  userInput.append("ESTATE,DUCHY\n");
 	  
@@ -638,7 +577,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDiscard(discard)
 	    .setDeck(deck)
 		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 
 	  trash = new Trash(COLONY);
@@ -653,7 +591,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDiscard(discard)
 	    .setDeck(deck)
 		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 
 	  trash = new Trash( COLONY);
@@ -708,7 +645,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(new Cards(ESTATE, DUKE, MOAT),
 	    		 new Cards())
 	    .setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  runSimple();
 	}
@@ -733,7 +669,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER, PROVINCE))
 		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P1");
 	  userInput.append("YES\n");
 	  
@@ -745,8 +680,6 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(ESTATE))
 	    .setDiscard(new Cards(COPPER, ESTATE),
 	    			new Cards(COPPER, ESTATE))
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P2");
 	  userInput.append("YES\n");
 	  
@@ -758,8 +691,6 @@ public class CardPlayLogicTest extends TestCase {
 		    		new Cards(ESTATE))
 	    .setDiscard(new Cards(COPPER),
 	    			new Cards(COPPER))
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P3");
 	  userInput.append("NO\nNO\n");
 	  
@@ -800,8 +731,6 @@ public class CardPlayLogicTest extends TestCase {
 		    		new Cards(CURSE, COPPER))
 	    .setDiscard(new Cards(CURSE, COPPER),
 	    			new Cards())
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P2");
 	  userInput.append("NO\n");
 	  
@@ -826,8 +755,6 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(COPPER, MILITIA))
 	    .setDiscard(new Cards(ESTATE, PROVINCE),
 	    			new Cards())
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P1");
 	  
 	  // Opponent reveals reaction. Nothing happens.
@@ -838,8 +765,6 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(COPPER, MILITIA))
 	    .setDiscard(new Cards(DUCHY),
 	    			new Cards(DUCHY))
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P2");
 	  userInput.append("YES\n");
 	  
@@ -851,8 +776,6 @@ public class CardPlayLogicTest extends TestCase {
 		    		new Cards())
 	    .setDiscard(new Cards(DUCHY),
 	    			new Cards(DUCHY, MILITIA))
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P3");
 	  userInput.append("NO\nTRASH\n");
 	  
@@ -864,8 +787,6 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(MILITIA))
 	    .setDiscard(new Cards(DUCHY),
 	    			new Cards(DUCHY, MILITIA))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P4");
 	  userInput.append("TAKE\n");
 	  
@@ -877,8 +798,6 @@ public class CardPlayLogicTest extends TestCase {
 		   			new Cards(MILITIA))
 	    .setDiscard(new Cards(DUCHY),
 	    			new Cards(DUCHY, COPPER))
-		.setTp(opponentTp, opponentExpectedTp)
-		.setNextTp(opponentNextTp, opponentExpectedNextTp)
 	    .build("P5");
 	  userInput.append("SILVER\nTAKE\n");
 	  
@@ -889,8 +808,6 @@ public class CardPlayLogicTest extends TestCase {
 	    .setDeck(deck)
 	    .setDiscard(new Cards(ESTATE),
 	    			new Cards(ESTATE, GOLD, SILVER))
-		.setTp(tp, expectedTp)
-		.setNextTp(nextTp, expectedNextTp)
 	    .build("P6");
 
 	  trash = new Trash(COLONY);
