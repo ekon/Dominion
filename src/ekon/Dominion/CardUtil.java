@@ -271,12 +271,13 @@ public class CardUtil {
 		  toPickUp = uiUtil.getBooleanFromUser("What do you want to do with " + card + "? Pick up or Discard?", "Pick Up", "Discard");
 		}
 		
-		if (player.hand().cards().size() < 7) {
-		  if (toPickUp) {
+		if (toPickUp) {
 			player.mover().to(HAND).move(card);
-		  } else {
+	  	} else {
 			player.mover().to(DISCARD).move(card);
-		  }
+	  	}
+
+		if (player.hand().cards().size() < 7) {
 		  card = player.mover().from(DECK).move();
 		}
 	  }

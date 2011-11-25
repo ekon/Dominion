@@ -1032,6 +1032,20 @@ public class CardPlayLogicTest extends TestCase {
 	public void testLibrary() {
 	  // Draw until you have 7 cards in hand. You may set aside any action cards drawn this way, as you draw them;
 	  // discard the set aside cards after you finish drawing.
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  cardToPlay = LIBRARY;
+	  
+	  // Test first 2 cards are treasure.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(PLATINUM, ESTATE, ESTATE, ESTATE, LIBRARY),
+				 new Cards(PLATINUM, ESTATE, ESTATE, ESTATE, COPPER, SILVER))
+	    .setDiscard(new Cards(PROVINCE),
+	    			new Cards(PROVINCE))
+	    .setDeck(new Cards(COPPER, SILVER),
+	    		 new Cards())
+	    .build("P1");
+	  runSimple();
 	  
 	}
 	
