@@ -1051,13 +1051,56 @@ public class CardPlayLogicTest extends TestCase {
 	  trash = new Trash(ESTATE);
 	  expectedTrash = new Trash(ESTATE, COPPER);
 	  runSimple("SILVER");
+	  // TODO(ekon): verify card on board was removed.
 	  
 	  // No treasures to trash.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(MINE),
+				 new Cards())
+	    .setDiscard(discard)
+	    .setDeck(deck)
+	    .build("P1");
+	  
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash;
+	  runSimple("SILVER");
 	  
 	  // Only 1 option available on board.
+	  player = new PlayerBuilder()
+		.setHand(new Cards(MINE, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard)
+	    .setDeck(deck)
+	    .build("P1");
+
+	  trash = new Trash(ESTATE);
+	  expectedTrash = new Trash(ESTATE, COPPER); // Card from board got trashed.
+	  opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
+	  setUp("COPPER");
+	  board.buy(SILVER, board.getCardCount(SILVER));
+	  assertEquals(0, board.getCardCount(SILVER));
+	  CardUtil.playCard(MINE, player, board);
+	  verify();
+	  // TODO(ekon): verify card on board was removed.
 	  
 	  // No cards available in board to get.
-	  
+	  player = new PlayerBuilder()
+		.setHand(new Cards(MINE, COPPER),
+				 new Cards(COPPER))
+	    .setDiscard(discard)
+	    .setDeck(deck)
+	    .build("P1");
+
+	  trash = new Trash(ESTATE);
+	  expectedTrash = trash; // Nothing got trashed.
+	  opponents = new TestPlayer[] { new TestPlayer("P2"), new TestPlayer("P3") };
+	  setUp("");
+	  board.buy(COPPER, board.getCardCount(COPPER));
+	  board.buy(SILVER, board.getCardCount(SILVER));
+	  assertEquals(0, board.getCardCount(COPPER));
+	  assertEquals(0, board.getCardCount(SILVER));
+	  CardUtil.playCard(MINE, player, board);
+	  verify();
 	}
 	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {
