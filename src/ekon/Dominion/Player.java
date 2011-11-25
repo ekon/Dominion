@@ -251,6 +251,12 @@ public class Player implements Comparable<Player> {
 	  move(cards);
 	}
 	
+	/** 
+	 * Picks up a card from the deck and moves it to a given location, if specified.
+	 * If deck has no more cards left, then reshuffles discard and puts into deck.
+	 * If discard doesn't have cards and deck doesn't have cards then does not perform a move and returns null.
+	 * @return card picked up from deck, or null.
+	 */
 	public Card move() {
 	  Card card;
 	  
@@ -261,22 +267,27 @@ public class Player implements Comparable<Player> {
 			break;
 		  } else {
 			replenishDeckFromDiscard();
-			card = deck.pop();
+			if (deck.size() > 0) {
+			  card = deck.pop();
+			} else {
+			  card = null;
+			}
 			break;
 		  }
 		default: throw new UnsupportedOperationException("Did you mean to use move(Card) instead?");
 	  }
 	  
-	  switch (to) {
-		case HAND: 		hand.add(card); break;
-		case DECK: 		deck.push(card); break;
-		case DISCARD: 	discard.add(card); break;
-		case TRASH: 	board.trash(card); break;
-		case BOARD:		board.putBack(card);  break;
-		case NO_MOVE:	break;
-  	  	default: 		throw new IllegalArgumentException("Unexpected place " + to.name() + " to move a card to.");
+	  if (card != null) {
+		switch (to) {
+		  case HAND: 	hand.add(card); break;
+		  case DECK: 	deck.push(card); break;
+		  case DISCARD: discard.add(card); break;
+		  case TRASH: 	board.trash(card); break;
+		  case BOARD:	board.putBack(card);  break;
+		  case NO_MOVE:	break;
+		  default: 		throw new IllegalArgumentException("Unexpected place " + to.name() + " to move a card to.");
+		}
 	  }
-	  
 	  return card;
 	}
 	

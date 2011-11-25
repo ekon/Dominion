@@ -308,5 +308,18 @@ public class CardUtil {
 	private static void playAdventurer(Player player) {
 	  // Reveal cards from  your deck until you reveal 2 Treasure cards.
 	  // Put those treasure cards into your hand and discard the other revealed cards.
+	  
+	  Cards treasure = new Cards();
+	  Cards cardsToDiscard = new Cards();
+	  
+	  Card cardToPickUp = player.mover().from(DECK).to(HAND).move();
+	  while((cardToPickUp != null) && (treasure.size() < 2)) {
+		if (cardToPickUp.types().contains(TREASURE)) {
+		  treasure.add(cardToPickUp);
+		} else {
+		  cardsToDiscard.add(cardToPickUp);
+		}
+		cardToPickUp = player.mover().from(DECK).to(HAND).move();
+	  }
 	}
 }
