@@ -282,27 +282,28 @@ public class CardUtil {
 	  } else {
 		cardToTrash = uiUtil.getCardFromUser("Which card would you like to trash?", availableTreasuresInHand);
 	  }
-		Cards availableTreasureToGet = board.getAvailableCardCostingUpTo(cardToTrash.cost() + 3, TREASURE);
-		if (availableTreasureToGet.size() == 0) {
-		  uiUtil.tellUser("There are no available cards to get from the board.");
-		  return;
-		}
 		
-		Card cardToGain = uiUtil.getCardFromUser("Which card would you like to replace it with?", availableTreasureToGet);
+	  Cards availableTreasureToGet = board.getAvailableCardCostingUpTo(cardToTrash.cost() + 3, TREASURE);
+	  if (availableTreasureToGet.size() == 0) {
+		uiUtil.tellUser("There are no available cards to get from the board.");
+		return;
+	  }
 		
-		player.mover().from(HAND).to(TRASH).move(cardToTrash);
-		player.mover().from(BOARD).to(HAND).move(cardToGain);
+	  Card cardToGain = uiUtil.getCardFromUser("Which card would you like to replace it with?", availableTreasureToGet);
+	  
+	  player.mover().from(HAND).to(TRASH).move(cardToTrash);
+	  player.mover().from(BOARD).to(HAND).move(cardToGain);
 	}
 	
 	private static void playWitch(Player player, Board board) {
-		// Each opponent gains a curse.
-		for (Player opponent : player.opponents()) {
-			uiUtil.tellUser(opponent.name() + "'s been attacked with WITCH.");
-			// If not playing reaction, then getting attacked.
-			if(!uiUtil.revealReaction(opponent)) {
-			  opponent.mover().from(BOARD).to(DISCARD).move(CURSE, true);
-			}
+	  // Each opponent gains a curse.
+	  for (Player opponent : player.opponents()) {
+		uiUtil.tellUser(opponent.name() + "'s been attacked with WITCH.");
+		// If not playing reaction, then getting attacked.
+		if(!uiUtil.revealReaction(opponent)) {
+		  opponent.mover().from(BOARD).to(DISCARD).move(CURSE, true);
 		}
+	  }
 	}
 	
 	private static void playAdventurer(Player player) {
@@ -321,5 +322,8 @@ public class CardUtil {
 		}
 		cardToPickUp = player.mover().from(DECK).to(HAND).move();
 	  }
+	  
+	  player.mover().to(HAND).move(treasure, true);
+	  player.mover().to(DISCARD).move(cardsToDiscard);
 	}
 }

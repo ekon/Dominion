@@ -1030,6 +1030,8 @@ public class CardPlayLogicTest extends TestCase {
 	
 	@Test
 	public void testLibrary() {
+	  // Draw until you have 7 cards in hand. You may set aside any action cards drawn this way, as you draw them;
+	  // discard the set aside cards after you finish drawing.
 	  
 	}
 	
@@ -1108,16 +1110,22 @@ public class CardPlayLogicTest extends TestCase {
 	  verify();
 	}
 	
+	@Test
+	public void testAdventurer() {
+	  // Reveal cards from  your deck until you reveal 2 Treasure cards.
+	  // Put those treasure cards into your hand and discard the other revealed cards.
+	}
+	
 	private TestPlayer recreateRemodelPlayer(Cards deck) {
-		return new PlayerBuilder()
-			.setHand( 	new Cards(REMODEL, COPPER),
-						new Cards())
-		    .setDiscard(new Cards(MILITIA),
-		    			new Cards(MILITIA, MOAT))
-		    .setDeck(deck)
-		    .setTp(tp, expectedTp)
-			.setNextTp(nextTp, expectedNextTp)
-		    .build("P1");
+	  return new PlayerBuilder()
+		.setHand( 	new Cards(REMODEL, COPPER),
+					new Cards())
+	    .setDiscard(new Cards(MILITIA),
+	    			new Cards(MILITIA, MOAT))
+	    .setDeck(deck)
+	    .setTp(tp, expectedTp)
+		.setNextTp(nextTp, expectedNextTp)
+	    .build("P1");
 	}
 	
 	private void runSimple() {
