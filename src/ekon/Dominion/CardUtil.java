@@ -65,6 +65,9 @@ public class CardUtil {
     			case CELLAR: playCellar(player); break;
     			case CHAPEL: playChapel(player); break;
     			case MOAT: break;
+    			case COURTYARD: playCourtyard(player); break;
+    			case PAWN: playPawn(player); break;
+    			case SECRET_CHAMBER: playSecretChamber(player); break;
     			case CHANCELLOR: playChancellor(player); break;
     			case WORKSHOP: playWorkshop(player, board); break;
     			case BEAUROCRAT: playBeaurocrat(player, board); break;
@@ -101,6 +104,20 @@ public class CardUtil {
 		player.mover().from(HAND).to(TRASH).move(cards);
 		uiUtil.tellUser("	" + player.name() + " trashed: " + cards.toString());
 	  }
+	}
+	
+	private static void playCourtyard(Player player) {
+	  // Put a card from your hand on top of your deck.
+	  Card cardToPutInDeck = uiUtil.getCardFromUser("Choose a card to put on top of your deck.", player.hand().availableCards());
+	  player.mover().from(HAND).to(DECK).move(cardToPutInDeck);
+	}
+	
+	private static void playPawn(Player player) {
+	  
+	}
+	
+	private static void playSecretChamber(Player player) {
+	  
 	}
 	
 	private static void playChancellor(Player player) {
