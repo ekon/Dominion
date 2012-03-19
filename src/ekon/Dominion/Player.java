@@ -127,7 +127,7 @@ public class Player implements Comparable<Player> {
   }
   
   /** @returns given number of cards picked up from deck. Re-shuffles discard & puts into deck, if necessary. */
-  public Cards pickUpCardsFromDeck(int numToPickUp) {
+  private Cards pickUpCardsFromDeck(int numToPickUp) {
 	int numLeftToPickUp = numToPickUp;
 	Cards pickedUpCards = new Cards();
 	
@@ -148,7 +148,7 @@ public class Player implements Comparable<Player> {
 	return pickedUpCards;
   }
   
-  public int getVictoryPoints() {
+  private int calculateVictoryPoints() {
 	Cards allCards = new Cards();
 	allCards.add(deck);
 	allCards.add(discard);
@@ -358,7 +358,7 @@ public class Player implements Comparable<Player> {
   @Override
   public String toString() {
 	return "{name=" + name + " | hand=" + hand.toString() + " | discard=" + discard.toString()
-		+ " | deck=" + deck.toString() + " | VP=" + getVictoryPoints() + "}";
+		+ " | deck=" + deck.toString() + " | VP=" + calculateVictoryPoints() + "}";
   }
   
   @Override

@@ -12,7 +12,7 @@ public class PlayerTest extends TestCase {
 	
 	@Override
 	public void setUp() throws Exception {
-		super.setUp();
+	  	super.setUp();
 		player = new Player("P1");
 		Player opponent1 = new Player("P2");
 		Player opponent2 = new Player("P3");
@@ -27,7 +27,7 @@ public class PlayerTest extends TestCase {
 	}
 	
 	@Test
-	public void testBuyCard() {
+	public void testTakeTurn() {
 		
 	}
 }
