@@ -157,6 +157,10 @@ public class Player implements Comparable<Player> {
 	return victoryTokens + CardUtil.calculateVictoryPoints(allCards);
   }
   
+  public void initForTesting(Hand hand, Stack<Card> deck, Cards discard) {
+	initForTesting(hand, deck, discard, new TurnProperties(), new TurnProperties());
+  }
+
   public void initForTesting(Hand hand, Stack<Card> deck, Cards discard, TurnProperties turn, TurnProperties nextTurn) {
 	SecurityUtil securityUtil = new SecurityUtil();
 	securityUtil.verifyCallingClassIsTest();
