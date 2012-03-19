@@ -9,6 +9,9 @@ import static ekon.dominion.Player.CardPlace.DECK;
 import static ekon.dominion.Player.CardPlace.DISCARD;
 import static ekon.dominion.Player.CardPlace.HAND;
 import static ekon.dominion.Player.CardPlace.TRASH;
+
+import java.util.ArrayList;
+
 import ekon.dominion.board.Board;
 
 public class CardUtil {
@@ -113,11 +116,28 @@ public class CardUtil {
 	}
 	
 	private static void playPawn(Player player) {
+	  // Choose two: +1 Card; +1 Action; +1 Buy; +1 Coin. (The choices must be different.)
+	  ArrayList<Choice> availableOptions = createChoicesList(Choice.PLUS_CARD, Choice.PLUS_ACTION, Choice.PLUS_BUY, Choice.PLUS_COIN);
+	  Choice choice1 = uiUtil.getChoiceFromUser(availableOptions);
 	  
+	  // Remove the chosen option and get second choice.
+	  availableOptions.remove(choice1);	  
+	  Choice choice2 = uiUtil.getChoiceFromUser(availableOptions);
+	  
+	  player.tp().add(choice1, choice2);
+	}
+	
+	private static ArrayList<Choice> createChoicesList(Choice... choices) {
+	  ArrayList<Choice> choicesList = new ArrayList<Choice>();
+	  for (Choice choice : choices) {
+		choicesList.add(choice);
+	  }
+	  return choicesList;
 	}
 	
 	private static void playSecretChamber(Player player) {
-	  
+	  // Discard any number of cards. +1 Coin per card discarded. When another player plays an attack card,
+	  // you may reveal this from your hand. If you do, +2 Cards, then put 2 cards from your hand on top of your deck.
 	}
 	
 	private static void playChancellor(Player player) {

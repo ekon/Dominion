@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 
 import ekon.dominion.Card.CardType;
 
@@ -46,6 +47,21 @@ public class UIUtil {
 	  }
 	}
 	return playReaction;
+  }
+  
+  public Choice getChoiceFromUser(ArrayList<Choice> choices) {
+	while (true) {
+	  String userInput = getUserInput("Choose " + choices.size(), choices.toString());
+	  try {
+		for (Choice choice : choices) {
+    		if (userInput.equals(choice.name())) {
+    		  return choice;
+    		}
+		}
+	  } catch (IllegalArgumentException e) {
+		userInput = getUserInput(userInput + " is not an available option.", choices.toString());
+	  }
+	}
   }
   
   public boolean getBooleanFromUser(String message, String posOption, String negOption) {

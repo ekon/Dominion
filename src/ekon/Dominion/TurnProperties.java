@@ -36,6 +36,21 @@ public class TurnProperties {
 	victoryTokens += numTokens;
   }
   
+  public void add(Choice choice) {
+	switch (choice) {
+	  case PLUS_ACTION: actions++; break;
+	  case PLUS_BUY: buys++; break;
+	  case PLUS_CARD: cards++; break;
+	  case PLUS_COIN: coins++; break;
+	}
+  }
+  
+  public void add(Choice...choices) {
+	for (Choice choice : choices) {
+	  add(choice);
+	}
+  }
+  
   public void addFromPreviousTurn(TurnProperties previousTP) {
 	  add(previousTP.cards, previousTP.actions, previousTP.coins, previousTP.buys, previousTP.victoryTokens);
   }
